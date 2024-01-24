@@ -3,15 +3,15 @@ name = "sigchat"
 version = "0.1.0"
 authors = ["john <john@nhoj.info>"]
 edition = "2018"
-description = "Matrix chat"
+description = "sigchat"
 
 # Dependency versions enforced by Cargo.lock.
 [dependencies]
 log = "0.4.14"
 num-derive = { version = "0.3.3", default-features = false}
 num-traits = { version = "0.2.14", default-features = false}
-xous = "0.9.52"
-xous-ipc = "0.9.52"
+xous = "0.9.56"
+xous-ipc = "0.9.56"
 log-server = { package = "xous-api-log", version = "0.1.48" }
 ticktimer-server = { package = "xous-api-ticktimer", version = "0.9.48" }
 xous-names = { package = "xous-api-names", version = "0.9.50" }
@@ -33,12 +33,16 @@ chat = { path = "../xous-core/libs/chat" }
 modals = { path = "../xous-core/services/modals" }
 percent-encoding = "2.2"
 rkyv = {version = "0.4.3", default-features = false, features = ["const_generics"]}
-rustls = { version = "0.21.7", features = ["dangerous_configuration"] }
 serde = { version = "1.0", features = [ "derive" ] }
 tls = { path = "../xous-core/libs/tls" }
 tungstenite = "0.21.0"
-ureq = { version = "2.7.1", features = ["json"] }
 url = "2.2.2"
+ring = {version = "=0.16.20"} #must be pinned since we patch in a version
+# must be manually specified as they have our pinned version of ring as a transitive dep.
+ureq = { version = "=2.7.1", features = ["json"] }
+rustls = { version = "=0.21.7", features = ["dangerous_configuration"] } 
+rustls-webpki = { version = "=0.101.4"}
+sct = { version = "=0.7.0" }
 
 [features]
 default = []
