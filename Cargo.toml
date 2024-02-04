@@ -48,8 +48,9 @@ sct = { version = "=0.7.0" }
 default = []
 
 # prefer hardware-accelerated versions of services
-[patch.crates-io.sha2]
-path = "../xous-core/services/engine-sha512"
+[patch.crates-io]
+sha2 = { git = "https://github.com/betrusted-io/hashes.git", branch = "sha2-v0.10.8-xous" }
+sha2_legacy = { git = "https://github.com/RustCrypto/hashes.git", tag = "sha2-v0.9.9", package = "sha2" }
 
 [patch.crates-io.aes]
 path = "../xous-core/services/aes"
