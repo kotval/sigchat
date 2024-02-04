@@ -8,6 +8,7 @@ mod trust_mode;
 use crate::Account;
 pub use config::Config;
 use group_permission::GroupPermission;
+use crate::signalservice::{ProvisioningUuid,ProvisionMessage};
 use link_state::LinkState;
 use locales::t;
 use modals::Modals;
@@ -16,6 +17,7 @@ use std::io::{Error, ErrorKind};
 use std::time::Duration;
 pub use trust_mode::TrustMode;
 use tungstenite::Message;
+use bytes::Bytes;
 
 // Structure modeled on signal-cli by AsamK <asamk@gmx.de> and contributors - https://github.com/AsamK/signal-cli.
 // signal-cli is a commandline interface for libsignal-service-java. It supports registering, verifying, sending and receiving messages.
@@ -163,7 +165,7 @@ impl Manager {
                 let result = match ws.read(Some(Duration::from_millis(5000))) {
                     Ok(Message::Binary(uuid)) => {
                         log::info!("received Provisioning UUID message from host");
-                        let uuid = libsignal::ProvisioningUuid::decode(uuid).id.clone();
+                        let uuid: ProvisioningUuid = prost::Message::decode(Bytes::from(uuid))?;
                         let identity_key_pair = libsignal::generate_identity_key_pair();
                         let pub_key = identity_key_pair.djb_identity_key.key.clone();
                         match url::Url::parse_with_params(

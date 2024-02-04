@@ -1,6 +1,7 @@
 mod account;
 pub mod api;
 mod manager;
+mod signalservice;
 
 use crate::account::{Account, ServiceEnvironment, DEFAULT_HOST};
 use crate::manager::{Config, Manager, TrustMode};

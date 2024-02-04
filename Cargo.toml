@@ -43,13 +43,18 @@ ureq = { version = "=2.7.1", features = ["json"] }
 rustls = { version = "=0.21.7", features = ["dangerous_configuration"] } 
 rustls-webpki = { version = "=0.101.4"}
 sct = { version = "=0.7.0" }
+prost = "0.12"
+bytes = "1"
+# waiting for curve25519-dalek update
+#libsignal-protocol = { git = "https://github.com/signalapp/libsignal", tag = "v0.32.0"}
+#libsignal-protocol = { path = "../libsignal/rust/protocol"}
 
 [features]
 default = []
 
 # prefer hardware-accelerated versions of services
-[patch.crates-io.sha2]
-path = "../xous-core/services/engine-sha512"
+[patch.crates-io]
+sha2 = { git = "https://github.com/betrusted-io/hashes.git", branch = "sha2-v0.10.8-xous" }
 
 [patch.crates-io.aes]
 path = "../xous-core/services/aes"
