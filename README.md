@@ -26,9 +26,9 @@ build directory
 
 For now, the app manifest has to be set in xous-core by running this command in the `xous-core` tree:
 
-`cargo xtask app-image sigchat`
+`cargo xtask dummy-template sigchat`
 
-This is just a matter of creating the manifest entry in the `gam`, if this flow generally works this will be worked around with a better solution.
+This is just a matter of creating the manifest entry in the `gam`.
 
 ### Out of Tree Sigchat build
 
@@ -46,10 +46,11 @@ Back in the `xous-core` tree, run this command:
 
 `cargo xtask app-image ../sigchat/target/riscv32imac-unknown-xous-elf/release/sigchat`
 
+Note: for development you may want to clean a copy of the pddb each time you run the app which can be done by running
+
+`cp tools/pddb-images/hosted_backup.bin tools/pddb-images/hosted.bin` 
+
 This should pull the `sigchat` ELF into the disk image, and attempt to launch it.
-
-I *think* because of the bodge on the app manifest, it may fail to launch because the `app-image` command would reconfigure the system to not have the `sigchat` context anymore. But if you can get to this point, I'll fix that...
-
 
 ## Prerequisites:
 
