@@ -44,7 +44,7 @@ When this completes, you should have the ELF executable in `target/riscv32imac-u
 
 Back in the `xous-core` tree, run this command:
 
-`cargo xtask app-image ../sigchat/target/riscv32imac-unknown-xous-elf/release/sigchat`
+`cargo xtask app-image sigchat:../sigchat/target/riscv32imac-unknown-xous-elf/release/sigchat`
 
 Note: for development you may want to clean a copy of the pddb each time you run the app which can be done by running
 
