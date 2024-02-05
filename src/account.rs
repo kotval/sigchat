@@ -1,7 +1,6 @@
 mod service_environment;
 
-use crate::manager::libsignal::{DeviceNameUtil, SignalServiceAddress}; //TODO: should this come from signalservice?
-use crate::signalservice::{ProvisionMessage};
+use crate::manager::libsignal::{DeviceNameUtil, ProvisionMessage, SignalServiceAddress};
 use pddb::Pddb;
 pub use service_environment::ServiceEnvironment;
 use std::io::{Error, ErrorKind, Read, Write};
@@ -277,9 +276,9 @@ impl Account {
         //     return Ok(false);
         // }
 
-        let pm = provisioning_msg;
-        self.set(ACI_IDENTITY_PRIVATE_KEY, Some(&pm.aci_identity_key_public))?;
-        self.set(ACI_IDENTITY_PUBLIC_KEY, Some(&pm.aci_identity_key_private))?;
+        let aci = provisioning_msg.aci;
+        self.set(ACI_IDENTITY_PRIVATE_KEY, Some(&aci.djb_private_key.key))?;
+        self.set(ACI_IDENTITY_PUBLIC_KEY, Some(&aci.djb_identity_key.key))?;
         self.set(ACI_SERVICE_ID_KEY, Some(&aci.service_id))?;
         self.set(DEVICE_ID_KEY, Some("0"))?;
         self.set(

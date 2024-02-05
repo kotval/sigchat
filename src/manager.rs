@@ -168,9 +168,10 @@ impl Manager {
                         let uuid: ProvisioningUuid = prost::Message::decode(Bytes::from(uuid))?;
                         let identity_key_pair = libsignal::generate_identity_key_pair();
                         let pub_key = identity_key_pair.djb_identity_key.key.clone();
+                        // TODO: pubkey should probably be base64 encoded
                         match url::Url::parse_with_params(
                             "sgnl://linkdevice",
-                            &[("uuid", &uuid.as_str()), ("pub_key", &pub_key.as_str())],
+                            &[("uuid", &uuid.uuid.unwrap()), ("pub_key", &pub_key)],
                         ) {
                             Ok(device_link_uri) => {
                                 log::info!("device_link_uri: {device_link_uri}");
