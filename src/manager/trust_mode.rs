@@ -1,6 +1,7 @@
-use rkyv::{Archive, Deserialize, Serialize};
 use std::fmt;
 use std::str::FromStr;
+
+use rkyv::{Archive, Deserialize, Serialize};
 
 // When to trust new identities:
 #[allow(dead_code)]
@@ -15,9 +16,7 @@ pub enum TrustMode {
 }
 
 impl fmt::Display for TrustMode {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{:?}", self)
-    }
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result { write!(f, "{:?}", self) }
 }
 
 impl FromStr for TrustMode {

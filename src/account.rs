@@ -1,11 +1,14 @@
 mod service_environment;
 
-use crate::manager::libsignal::{DeviceNameUtil, ProvisionMessage, SignalServiceAddress};
-use pddb::Pddb;
-pub use service_environment::ServiceEnvironment;
 use std::io::{Error, ErrorKind, Read, Write};
 use std::str::FromStr;
+
+use pddb::Pddb;
+pub use service_environment::ServiceEnvironment;
 use url::Host;
+
+//use crate::manager::libsignal::{DeviceNameUtil, ProvisionMessage, SignalServiceAddress};
+use crate::signalservice::ProvisionMessage;
 
 /// The Account struct is architected as a cache over a pddb dictionary.
 ///
@@ -17,7 +20,6 @@ use url::Host;
 /// * the default values in a new Account are first written to pddb, and then read back into the struct.
 /// * all fields must be successfully read from pddb or read fails with Error
 /// * setting a value requires a successful writes to pddb before updating the field
-///
 
 #[allow(dead_code)]
 pub struct Account {
@@ -82,7 +84,6 @@ impl Account {
     /// # Returns
     ///
     /// a new Account with default values
-    ///
     pub fn new(
         pddb_dict: &str,
         host: &Host,
@@ -96,12 +97,7 @@ impl Account {
         set(&pddb, pddb_dict, DEVICE_ID_KEY, Some("0"))?;
         set(&pddb, pddb_dict, ENCRYPTED_DEVICE_NAME_KEY, None)?;
         set(&pddb, pddb_dict, HOST_KEY, Some(&host.to_string()))?;
-        set(
-            &pddb,
-            pddb_dict,
-            IS_MULTI_DEVICE_KEY,
-            Some(&false.to_string()),
-        )?;
+        set(&pddb, pddb_dict, IS_MULTI_DEVICE_KEY, Some(&false.to_string()))?;
         set(&pddb, pddb_dict, NUMBER_KEY, None)?;
         set(&pddb, pddb_dict, PASSWORD_KEY, None)?;
         set(&pddb, pddb_dict, PIN_MASTER_KEY_KEY, None)?;
@@ -110,19 +106,9 @@ impl Account {
         set(&pddb, pddb_dict, PNI_SERVICE_ID_KEY, None)?;
         set(&pddb, pddb_dict, PROFILE_KEY_KEY, None)?;
         set(&pddb, pddb_dict, REGISTERED_KEY, Some(&false.to_string()))?;
-        set(
-            &pddb,
-            pddb_dict,
-            SERVICE_ENVIRONMENT_KEY,
-            Some(&service_environment.to_string()),
-        )?;
+        set(&pddb, pddb_dict, SERVICE_ENVIRONMENT_KEY, Some(&service_environment.to_string()))?;
         set(&pddb, pddb_dict, STORAGE_KEY_KEY, None)?;
-        set(
-            &pddb,
-            pddb_dict,
-            STORE_LAST_RECEIVE_TIMESTAMP_KEY,
-            Some("0"),
-        )?;
+        set(&pddb, pddb_dict, STORE_LAST_RECEIVE_TIMESTAMP_KEY, Some("0"))?;
         set(&pddb, pddb_dict, STORE_MANIFEST_VERSION_KEY, Some("-1"))?;
         set(&pddb, pddb_dict, STORE_MANIFEST_KEY, None)?;
         Account::read(pddb_dict)
@@ -184,28 +170,28 @@ impl Account {
                 Ok(Some(store_manifest_version)),
                 Ok(store_manifest),
             ) => Ok(Account {
-                pddb: pddb,
+                pddb,
                 pddb_dict: pddb_dict.to_string(),
-                aci_identity_private: aci_identity_private,
-                aci_identity_public: aci_identity_public,
-                aci_service_id: aci_service_id,
+                aci_identity_private,
+                aci_identity_public,
+                aci_service_id,
                 device_id: device_id.parse().unwrap(),
-                encrypted_device_name: encrypted_device_name,
+                encrypted_device_name,
                 host: Host::parse(&host).unwrap(),
                 is_multi_device: is_multi_device.parse().unwrap(),
-                number: number,
-                password: password,
-                pin_master_key: pin_master_key,
-                pni_identity_private: pni_identity_private,
-                pni_identity_public: pni_identity_public,
-                pni_service_id: pni_service_id,
-                profile_key: profile_key,
+                number,
+                password,
+                pin_master_key,
+                pni_identity_private,
+                pni_identity_public,
+                pni_service_id,
+                profile_key,
                 registered: registered.parse().unwrap(),
                 service_environment: ServiceEnvironment::from_str(&service_environment).unwrap(),
-                storage_key: storage_key,
+                storage_key,
                 store_last_receive_timestamp: store_last_receive_timestamp.parse().unwrap(),
                 store_manifest_version: store_manifest_version.parse().unwrap(),
-                store_manifest: store_manifest,
+                store_manifest,
             }),
             (Err(e), _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _) => Err(e),
             (_, Err(e), _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _) => Err(e),
@@ -236,7 +222,6 @@ impl Account {
     /// Delete this Account key/value from the pddb
     ///
     /// While this Account struct will persist in memory, a subsequent Account.read() will fail
-    ///
     pub fn delete(pddb_dict: &str) -> Result<(), Error> {
         let pddb = pddb::Pddb::new();
         pddb.try_mount();
@@ -258,12 +243,7 @@ impl Account {
     /// # Returns
     ///
     /// true on success
-    ///
-    pub fn link(
-        &mut self,
-        device_name: &str,
-        provisioning_msg: ProvisionMessage,
-    ) -> Result<bool, Error> {
+    pub fn link(&mut self, device_name: &str, provisioning_msg: ProvisionMessage) -> Result<bool, Error> {
         // Check if this device can be relinked
         if self.is_primary_device() {
             log::warn!("failed to link device as already registered as primary");
@@ -283,10 +263,7 @@ impl Account {
         self.set(DEVICE_ID_KEY, Some("0"))?;
         self.set(
             ENCRYPTED_DEVICE_NAME_KEY,
-            Some(&DeviceNameUtil::encrypt_device_name(
-                device_name,
-                aci.djb_private_key,
-            )),
+            Some(&DeviceNameUtil::encrypt_device_name(device_name, aci.djb_private_key)),
         )?;
         self.set(IS_MULTI_DEVICE_KEY, Some(&true.to_string()))?;
         self.set(NUMBER_KEY, Some(&provisioning_msg.number))?;
@@ -298,11 +275,7 @@ impl Account {
         self.set(PNI_SERVICE_ID_KEY, Some(&aci.service_id))?;
         self.set(
             PROFILE_KEY_KEY,
-            Some(
-                &provisioning_msg
-                    .profile_key
-                    .unwrap_or_else(|| "STUB 32 bytes".to_string()),
-            ),
+            Some(&provisioning_msg.profile_key.unwrap_or_else(|| "STUB 32 bytes".to_string())),
         )?;
         self.set(REGISTERED_KEY, Some(&false.to_string()))?;
         self.set(STORAGE_KEY_KEY, None)?;
@@ -324,17 +297,11 @@ impl Account {
         Ok(true)
     }
 
-    pub fn host(&self) -> &Host {
-        &self.host
-    }
+    pub fn host(&self) -> &Host { &self.host }
 
-    pub fn is_primary_device(&self) -> bool {
-        self.device_id == SignalServiceAddress::DEFAULT_DEVICE_ID
-    }
+    pub fn is_primary_device(&self) -> bool { self.device_id == SignalServiceAddress::DEFAULT_DEVICE_ID }
 
-    pub fn is_registered(&self) -> bool {
-        self.registered
-    }
+    pub fn is_registered(&self) -> bool { self.registered }
 
     #[allow(dead_code)]
     pub fn number(&self) -> Option<&str> {
@@ -344,9 +311,7 @@ impl Account {
         }
     }
 
-    pub fn service_environment(&self) -> &ServiceEnvironment {
-        &self.service_environment
-    }
+    pub fn service_environment(&self) -> &ServiceEnvironment { &self.service_environment }
 
     #[allow(dead_code)]
     pub fn set_number(&mut self, value: &str) -> Result<(), Error> {
@@ -358,9 +323,7 @@ impl Account {
     }
 
     #[allow(dead_code)]
-    fn get(&self, key: &str) -> Result<Option<String>, Error> {
-        get(&self.pddb, &self.pddb_dict, key)
-    }
+    fn get(&self, key: &str) -> Result<Option<String>, Error> { get(&self.pddb, &self.pddb_dict, key) }
 
     // Sets the value of a pddb_key / field in the Account
     //
@@ -383,9 +346,7 @@ impl Account {
                 ACI_IDENTITY_PUBLIC_KEY => Ok(self.aci_identity_public = owned_value),
                 ACI_SERVICE_ID_KEY => Ok(self.aci_service_id = owned_value),
                 DEVICE_ID_KEY => Ok(self.device_id = owned_value.unwrap().parse().unwrap()),
-                IS_MULTI_DEVICE_KEY => {
-                    Ok(self.is_multi_device = owned_value.unwrap().parse().unwrap())
-                }
+                IS_MULTI_DEVICE_KEY => Ok(self.is_multi_device = owned_value.unwrap().parse().unwrap()),
                 NUMBER_KEY => Ok(self.number = owned_value),
                 PASSWORD_KEY => Ok(self.password = owned_value),
                 PIN_MASTER_KEY_KEY => Ok(self.pin_master_key = owned_value),
@@ -394,8 +355,9 @@ impl Account {
                 PNI_SERVICE_ID_KEY => Ok(self.pni_service_id = owned_value),
                 PROFILE_KEY_KEY => Ok(self.profile_key = owned_value),
                 REGISTERED_KEY => Ok(self.registered = owned_value.unwrap().parse().unwrap()),
-                SERVICE_ENVIRONMENT_KEY => Ok(self.service_environment =
-                    ServiceEnvironment::from_str(&value.unwrap()).unwrap()),
+                SERVICE_ENVIRONMENT_KEY => {
+                    Ok(self.service_environment = ServiceEnvironment::from_str(&value.unwrap()).unwrap())
+                }
                 STORAGE_KEY_KEY => Ok(self.storage_key = owned_value),
                 _ => {
                     log::warn!("invalid key: {key}");

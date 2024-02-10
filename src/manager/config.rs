@@ -1,5 +1,6 @@
-use crate::ServiceEnvironment;
 use url::{Host, Url};
+
+use crate::ServiceEnvironment;
 
 pub struct Config {
     host: Host,
@@ -12,27 +13,21 @@ impl Config {
         let host_base = host.to_string();
         match service_environment {
             ServiceEnvironment::Live => Self {
-                host: host,
-                service_environment: service_environment,
+                host,
+                service_environment,
                 url: Url::parse(&format!("https://chat.{}", host_base)).unwrap(),
             },
             ServiceEnvironment::Staging => Self {
-                host: host,
-                service_environment: service_environment,
+                host,
+                service_environment,
                 url: Url::parse(&format!("https://chat.staging.{}", host_base)).unwrap(),
             },
         }
     }
 
-    pub fn host(&self) -> &Host {
-        &self.host
-    }
+    pub fn host(&self) -> &Host { &self.host }
 
-    pub fn service_environment(&self) -> &ServiceEnvironment {
-        &self.service_environment
-    }
+    pub fn service_environment(&self) -> &ServiceEnvironment { &self.service_environment }
 
-    pub fn url(&self) -> &Url {
-        &self.url
-    }
+    pub fn url(&self) -> &Url { &self.url }
 }

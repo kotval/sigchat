@@ -2,55 +2,55 @@
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DeviceName {
-    #[prost(bytes="vec", optional, tag="1")]
+    #[prost(bytes = "vec", optional, tag = "1")]
     pub ephemeral_public: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(bytes="vec", optional, tag="2")]
+    #[prost(bytes = "vec", optional, tag = "2")]
     pub synthetic_iv: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(bytes="vec", optional, tag="3")]
+    #[prost(bytes = "vec", optional, tag = "3")]
     pub ciphertext: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ProvisioningUuid {
-    #[prost(string, optional, tag="1")]
+    #[prost(string, optional, tag = "1")]
     pub uuid: ::core::option::Option<::prost::alloc::string::String>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ProvisionEnvelope {
-    #[prost(bytes="vec", optional, tag="1")]
+    #[prost(bytes = "vec", optional, tag = "1")]
     pub public_key: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
     /// Encrypted ProvisionMessage
-    #[prost(bytes="vec", optional, tag="2")]
+    #[prost(bytes = "vec", optional, tag = "2")]
     pub body: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ProvisionMessage {
-    #[prost(bytes="vec", optional, tag="1")]
+    #[prost(bytes = "vec", optional, tag = "1")]
     pub aci_identity_key_public: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(bytes="vec", optional, tag="2")]
+    #[prost(bytes = "vec", optional, tag = "2")]
     pub aci_identity_key_private: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(bytes="vec", optional, tag="11")]
+    #[prost(bytes = "vec", optional, tag = "11")]
     pub pni_identity_key_public: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(bytes="vec", optional, tag="12")]
+    #[prost(bytes = "vec", optional, tag = "12")]
     pub pni_identity_key_private: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(string, optional, tag="8")]
+    #[prost(string, optional, tag = "8")]
     pub aci: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(string, optional, tag="10")]
+    #[prost(string, optional, tag = "10")]
     pub pni: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(string, optional, tag="3")]
+    #[prost(string, optional, tag = "3")]
     pub number: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(string, optional, tag="4")]
+    #[prost(string, optional, tag = "4")]
     pub provisioning_code: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(string, optional, tag="5")]
+    #[prost(string, optional, tag = "5")]
     pub user_agent: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(bytes="vec", optional, tag="6")]
+    #[prost(bytes = "vec", optional, tag = "6")]
     pub profile_key: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(bool, optional, tag="7")]
+    #[prost(bool, optional, tag = "7")]
     pub read_receipts: ::core::option::Option<bool>,
     /// NEXT ID: 13
-    #[prost(uint32, optional, tag="9")]
+    #[prost(uint32, optional, tag = "9")]
     pub provisioning_version: ::core::option::Option<u32>,
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
@@ -70,6 +70,7 @@ impl ProvisioningVersion {
             ProvisioningVersion::TabletSupport => "TABLET_SUPPORT",
         }
     }
+
     /// Creates an enum from field names used in the ProtoBuf definition.
     pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
         match value {
@@ -82,29 +83,29 @@ impl ProvisioningVersion {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Envelope {
-    #[prost(enumeration="envelope::Type", optional, tag="1")]
+    #[prost(enumeration = "envelope::Type", optional, tag = "1")]
     pub r#type: ::core::option::Option<i32>,
-    #[prost(string, optional, tag="11")]
+    #[prost(string, optional, tag = "11")]
     pub source_service_id: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(uint32, optional, tag="7")]
+    #[prost(uint32, optional, tag = "7")]
     pub source_device: ::core::option::Option<u32>,
-    #[prost(string, optional, tag="13")]
+    #[prost(string, optional, tag = "13")]
     pub destination_service_id: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(uint64, optional, tag="5")]
+    #[prost(uint64, optional, tag = "5")]
     pub timestamp: ::core::option::Option<u64>,
     /// Contains an encrypted Content
-    #[prost(bytes="vec", optional, tag="8")]
+    #[prost(bytes = "vec", optional, tag = "8")]
     pub content: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(string, optional, tag="9")]
+    #[prost(string, optional, tag = "9")]
     pub server_guid: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(uint64, optional, tag="10")]
+    #[prost(uint64, optional, tag = "10")]
     pub server_timestamp: ::core::option::Option<u64>,
-    #[prost(bool, optional, tag="14", default="true")]
+    #[prost(bool, optional, tag = "14", default = "true")]
     pub urgent: ::core::option::Option<bool>,
-    #[prost(bool, optional, tag="16")]
+    #[prost(bool, optional, tag = "16")]
     pub story: ::core::option::Option<bool>,
     /// NEXT ID: 18
-    #[prost(bytes="vec", optional, tag="17")]
+    #[prost(bytes = "vec", optional, tag = "17")]
     pub reporting_token: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
 }
 /// Nested message and enum types in `Envelope`.
@@ -136,6 +137,7 @@ pub mod envelope {
                 Type::PlaintextContent => "PLAINTEXT_CONTENT",
             }
         }
+
         /// Creates an enum from field names used in the ProtoBuf definition.
         pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
             match value {
@@ -154,62 +156,62 @@ pub mod envelope {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Content {
-    #[prost(message, optional, tag="1")]
+    #[prost(message, optional, tag = "1")]
     pub data_message: ::core::option::Option<DataMessage>,
-    #[prost(message, optional, tag="2")]
+    #[prost(message, optional, tag = "2")]
     pub sync_message: ::core::option::Option<SyncMessage>,
-    #[prost(message, optional, tag="3")]
+    #[prost(message, optional, tag = "3")]
     pub call_message: ::core::option::Option<CallMessage>,
-    #[prost(message, optional, tag="4")]
+    #[prost(message, optional, tag = "4")]
     pub null_message: ::core::option::Option<NullMessage>,
-    #[prost(message, optional, tag="5")]
+    #[prost(message, optional, tag = "5")]
     pub receipt_message: ::core::option::Option<ReceiptMessage>,
-    #[prost(message, optional, tag="6")]
+    #[prost(message, optional, tag = "6")]
     pub typing_message: ::core::option::Option<TypingMessage>,
-    #[prost(bytes="vec", optional, tag="7")]
+    #[prost(bytes = "vec", optional, tag = "7")]
     pub sender_key_distribution_message: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(bytes="vec", optional, tag="8")]
+    #[prost(bytes = "vec", optional, tag = "8")]
     pub decryption_error_message: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(message, optional, tag="9")]
+    #[prost(message, optional, tag = "9")]
     pub story_message: ::core::option::Option<StoryMessage>,
-    #[prost(message, optional, tag="10")]
+    #[prost(message, optional, tag = "10")]
     pub pni_signature_message: ::core::option::Option<PniSignatureMessage>,
-    #[prost(message, optional, tag="11")]
+    #[prost(message, optional, tag = "11")]
     pub edit_message: ::core::option::Option<EditMessage>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CallMessage {
-    #[prost(message, optional, tag="1")]
+    #[prost(message, optional, tag = "1")]
     pub offer: ::core::option::Option<call_message::Offer>,
-    #[prost(message, optional, tag="2")]
+    #[prost(message, optional, tag = "2")]
     pub answer: ::core::option::Option<call_message::Answer>,
-    #[prost(message, repeated, tag="3")]
+    #[prost(message, repeated, tag = "3")]
     pub ice_update: ::prost::alloc::vec::Vec<call_message::IceUpdate>,
-    #[prost(message, optional, tag="4")]
+    #[prost(message, optional, tag = "4")]
     pub legacy_hangup: ::core::option::Option<call_message::Hangup>,
-    #[prost(message, optional, tag="5")]
+    #[prost(message, optional, tag = "5")]
     pub busy: ::core::option::Option<call_message::Busy>,
-    #[prost(message, optional, tag="7")]
+    #[prost(message, optional, tag = "7")]
     pub hangup: ::core::option::Option<call_message::Hangup>,
-    #[prost(uint32, optional, tag="9")]
+    #[prost(uint32, optional, tag = "9")]
     pub destination_device_id: ::core::option::Option<u32>,
-    #[prost(message, optional, tag="10")]
+    #[prost(message, optional, tag = "10")]
     pub opaque: ::core::option::Option<call_message::Opaque>,
 }
 /// Nested message and enum types in `CallMessage`.
 pub mod call_message {
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Offer {
-        #[prost(uint64, optional, tag="1")]
+        #[prost(uint64, optional, tag = "1")]
         pub id: ::core::option::Option<u64>,
         /// Legacy/deprecated; replaced by 'opaque'
-        #[prost(string, optional, tag="2")]
+        #[prost(string, optional, tag = "2")]
         pub sdp: ::core::option::Option<::prost::alloc::string::String>,
-        #[prost(enumeration="offer::Type", optional, tag="3")]
+        #[prost(enumeration = "offer::Type", optional, tag = "3")]
         pub r#type: ::core::option::Option<i32>,
-        #[prost(bytes="vec", optional, tag="4")]
+        #[prost(bytes = "vec", optional, tag = "4")]
         pub opaque: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
     }
     /// Nested message and enum types in `Offer`.
@@ -231,6 +233,7 @@ pub mod call_message {
                     Type::OfferVideoCall => "OFFER_VIDEO_CALL",
                 }
             }
+
             /// Creates an enum from field names used in the ProtoBuf definition.
             pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
                 match value {
@@ -242,47 +245,47 @@ pub mod call_message {
         }
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Answer {
-        #[prost(uint64, optional, tag="1")]
+        #[prost(uint64, optional, tag = "1")]
         pub id: ::core::option::Option<u64>,
         /// Legacy/deprecated; replaced by 'opaque'
-        #[prost(string, optional, tag="2")]
+        #[prost(string, optional, tag = "2")]
         pub sdp: ::core::option::Option<::prost::alloc::string::String>,
-        #[prost(bytes="vec", optional, tag="3")]
+        #[prost(bytes = "vec", optional, tag = "3")]
         pub opaque: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct IceUpdate {
-        #[prost(uint64, optional, tag="1")]
+        #[prost(uint64, optional, tag = "1")]
         pub id: ::core::option::Option<u64>,
         /// Legacy/deprecated; remove when old clients are gone.
-        #[prost(string, optional, tag="2")]
+        #[prost(string, optional, tag = "2")]
         pub mid: ::core::option::Option<::prost::alloc::string::String>,
         /// Legacy/deprecated; remove when old clients are gone.
-        #[prost(uint32, optional, tag="3")]
+        #[prost(uint32, optional, tag = "3")]
         pub line: ::core::option::Option<u32>,
         /// Legacy/deprecated; replaced by 'opaque'
-        #[prost(string, optional, tag="4")]
+        #[prost(string, optional, tag = "4")]
         pub sdp: ::core::option::Option<::prost::alloc::string::String>,
-        #[prost(bytes="vec", optional, tag="5")]
+        #[prost(bytes = "vec", optional, tag = "5")]
         pub opaque: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Busy {
-        #[prost(uint64, optional, tag="1")]
+        #[prost(uint64, optional, tag = "1")]
         pub id: ::core::option::Option<u64>,
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Hangup {
-        #[prost(uint64, optional, tag="1")]
+        #[prost(uint64, optional, tag = "1")]
         pub id: ::core::option::Option<u64>,
-        #[prost(enumeration="hangup::Type", optional, tag="2")]
+        #[prost(enumeration = "hangup::Type", optional, tag = "2")]
         pub r#type: ::core::option::Option<i32>,
-        #[prost(uint32, optional, tag="3")]
+        #[prost(uint32, optional, tag = "3")]
         pub device_id: ::core::option::Option<u32>,
     }
     /// Nested message and enum types in `Hangup`.
@@ -310,6 +313,7 @@ pub mod call_message {
                     Type::HangupNeedPermission => "HANGUP_NEED_PERMISSION",
                 }
             }
+
             /// Creates an enum from field names used in the ProtoBuf definition.
             pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
                 match value {
@@ -324,11 +328,11 @@ pub mod call_message {
         }
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Opaque {
-        #[prost(bytes="vec", optional, tag="1")]
+        #[prost(bytes = "vec", optional, tag = "1")]
         pub data: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-        #[prost(enumeration="opaque::Urgency", optional, tag="2")]
+        #[prost(enumeration = "opaque::Urgency", optional, tag = "2")]
         pub urgency: ::core::option::Option<i32>,
     }
     /// Nested message and enum types in `Opaque`.
@@ -350,6 +354,7 @@ pub mod call_message {
                     Urgency::HandleImmediately => "HANDLE_IMMEDIATELY",
                 }
             }
+
             /// Creates an enum from field names used in the ProtoBuf definition.
             pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
                 match value {
@@ -364,11 +369,11 @@ pub mod call_message {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BodyRange {
-    #[prost(uint32, optional, tag="1")]
+    #[prost(uint32, optional, tag = "1")]
     pub start: ::core::option::Option<u32>,
-    #[prost(uint32, optional, tag="2")]
+    #[prost(uint32, optional, tag = "2")]
     pub length: ::core::option::Option<u32>,
-    #[prost(oneof="body_range::AssociatedValue", tags="3, 4")]
+    #[prost(oneof = "body_range::AssociatedValue", tags = "3, 4")]
     pub associated_value: ::core::option::Option<body_range::AssociatedValue>,
 }
 /// Nested message and enum types in `BodyRange`.
@@ -398,6 +403,7 @@ pub mod body_range {
                 Style::Monospace => "MONOSPACE",
             }
         }
+
         /// Creates an enum from field names used in the ProtoBuf definition.
         pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
             match value {
@@ -412,86 +418,86 @@ pub mod body_range {
         }
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum AssociatedValue {
-        #[prost(string, tag="3")]
+        #[prost(string, tag = "3")]
         MentionAci(::prost::alloc::string::String),
-        #[prost(enumeration="Style", tag="4")]
+        #[prost(enumeration = "Style", tag = "4")]
         Style(i32),
     }
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DataMessage {
-    #[prost(string, optional, tag="1")]
+    #[prost(string, optional, tag = "1")]
     pub body: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(message, repeated, tag="2")]
+    #[prost(message, repeated, tag = "2")]
     pub attachments: ::prost::alloc::vec::Vec<AttachmentPointer>,
-    #[prost(message, optional, tag="15")]
+    #[prost(message, optional, tag = "15")]
     pub group_v2: ::core::option::Option<GroupContextV2>,
-    #[prost(uint32, optional, tag="4")]
+    #[prost(uint32, optional, tag = "4")]
     pub flags: ::core::option::Option<u32>,
-    #[prost(uint32, optional, tag="5")]
+    #[prost(uint32, optional, tag = "5")]
     pub expire_timer: ::core::option::Option<u32>,
-    #[prost(bytes="vec", optional, tag="6")]
+    #[prost(bytes = "vec", optional, tag = "6")]
     pub profile_key: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(uint64, optional, tag="7")]
+    #[prost(uint64, optional, tag = "7")]
     pub timestamp: ::core::option::Option<u64>,
-    #[prost(message, optional, tag="8")]
+    #[prost(message, optional, tag = "8")]
     pub quote: ::core::option::Option<data_message::Quote>,
-    #[prost(message, repeated, tag="9")]
+    #[prost(message, repeated, tag = "9")]
     pub contact: ::prost::alloc::vec::Vec<data_message::Contact>,
-    #[prost(message, repeated, tag="10")]
+    #[prost(message, repeated, tag = "10")]
     pub preview: ::prost::alloc::vec::Vec<Preview>,
-    #[prost(message, optional, tag="11")]
+    #[prost(message, optional, tag = "11")]
     pub sticker: ::core::option::Option<data_message::Sticker>,
-    #[prost(uint32, optional, tag="12")]
+    #[prost(uint32, optional, tag = "12")]
     pub required_protocol_version: ::core::option::Option<u32>,
-    #[prost(bool, optional, tag="14")]
+    #[prost(bool, optional, tag = "14")]
     pub is_view_once: ::core::option::Option<bool>,
-    #[prost(message, optional, tag="16")]
+    #[prost(message, optional, tag = "16")]
     pub reaction: ::core::option::Option<data_message::Reaction>,
-    #[prost(message, optional, tag="17")]
+    #[prost(message, optional, tag = "17")]
     pub delete: ::core::option::Option<data_message::Delete>,
-    #[prost(message, repeated, tag="18")]
+    #[prost(message, repeated, tag = "18")]
     pub body_ranges: ::prost::alloc::vec::Vec<BodyRange>,
-    #[prost(message, optional, tag="19")]
+    #[prost(message, optional, tag = "19")]
     pub group_call_update: ::core::option::Option<data_message::GroupCallUpdate>,
-    #[prost(message, optional, tag="20")]
+    #[prost(message, optional, tag = "20")]
     pub payment: ::core::option::Option<data_message::Payment>,
-    #[prost(message, optional, tag="21")]
+    #[prost(message, optional, tag = "21")]
     pub story_context: ::core::option::Option<data_message::StoryContext>,
-    #[prost(message, optional, tag="22")]
+    #[prost(message, optional, tag = "22")]
     pub gift_badge: ::core::option::Option<data_message::GiftBadge>,
 }
 /// Nested message and enum types in `DataMessage`.
 pub mod data_message {
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Quote {
-        #[prost(uint64, optional, tag="1")]
+        #[prost(uint64, optional, tag = "1")]
         pub id: ::core::option::Option<u64>,
-        #[prost(string, optional, tag="5")]
+        #[prost(string, optional, tag = "5")]
         pub author_aci: ::core::option::Option<::prost::alloc::string::String>,
-        #[prost(string, optional, tag="3")]
+        #[prost(string, optional, tag = "3")]
         pub text: ::core::option::Option<::prost::alloc::string::String>,
-        #[prost(message, repeated, tag="4")]
+        #[prost(message, repeated, tag = "4")]
         pub attachments: ::prost::alloc::vec::Vec<quote::QuotedAttachment>,
-        #[prost(message, repeated, tag="6")]
+        #[prost(message, repeated, tag = "6")]
         pub body_ranges: ::prost::alloc::vec::Vec<super::BodyRange>,
-        #[prost(enumeration="quote::Type", optional, tag="7")]
+        #[prost(enumeration = "quote::Type", optional, tag = "7")]
         pub r#type: ::core::option::Option<i32>,
     }
     /// Nested message and enum types in `Quote`.
     pub mod quote {
         #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct QuotedAttachment {
-            #[prost(string, optional, tag="1")]
+            #[prost(string, optional, tag = "1")]
             pub content_type: ::core::option::Option<::prost::alloc::string::String>,
-            #[prost(string, optional, tag="2")]
+            #[prost(string, optional, tag = "2")]
             pub file_name: ::core::option::Option<::prost::alloc::string::String>,
-            #[prost(message, optional, tag="3")]
+            #[prost(message, optional, tag = "3")]
             pub thumbnail: ::core::option::Option<super::super::AttachmentPointer>,
         }
         #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
@@ -511,6 +517,7 @@ pub mod data_message {
                     Type::GiftBadge => "GIFT_BADGE",
                 }
             }
+
             /// Creates an enum from field names used in the ProtoBuf definition.
             pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
                 match value {
@@ -522,47 +529,47 @@ pub mod data_message {
         }
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Contact {
-        #[prost(message, optional, tag="1")]
+        #[prost(message, optional, tag = "1")]
         pub name: ::core::option::Option<contact::Name>,
-        #[prost(message, repeated, tag="3")]
+        #[prost(message, repeated, tag = "3")]
         pub number: ::prost::alloc::vec::Vec<contact::Phone>,
-        #[prost(message, repeated, tag="4")]
+        #[prost(message, repeated, tag = "4")]
         pub email: ::prost::alloc::vec::Vec<contact::Email>,
-        #[prost(message, repeated, tag="5")]
+        #[prost(message, repeated, tag = "5")]
         pub address: ::prost::alloc::vec::Vec<contact::PostalAddress>,
-        #[prost(message, optional, tag="6")]
+        #[prost(message, optional, tag = "6")]
         pub avatar: ::core::option::Option<contact::Avatar>,
-        #[prost(string, optional, tag="7")]
+        #[prost(string, optional, tag = "7")]
         pub organization: ::core::option::Option<::prost::alloc::string::String>,
     }
     /// Nested message and enum types in `Contact`.
     pub mod contact {
         #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct Name {
-            #[prost(string, optional, tag="1")]
+            #[prost(string, optional, tag = "1")]
             pub given_name: ::core::option::Option<::prost::alloc::string::String>,
-            #[prost(string, optional, tag="2")]
+            #[prost(string, optional, tag = "2")]
             pub family_name: ::core::option::Option<::prost::alloc::string::String>,
-            #[prost(string, optional, tag="3")]
+            #[prost(string, optional, tag = "3")]
             pub prefix: ::core::option::Option<::prost::alloc::string::String>,
-            #[prost(string, optional, tag="4")]
+            #[prost(string, optional, tag = "4")]
             pub suffix: ::core::option::Option<::prost::alloc::string::String>,
-            #[prost(string, optional, tag="5")]
+            #[prost(string, optional, tag = "5")]
             pub middle_name: ::core::option::Option<::prost::alloc::string::String>,
-            #[prost(string, optional, tag="6")]
+            #[prost(string, optional, tag = "6")]
             pub display_name: ::core::option::Option<::prost::alloc::string::String>,
         }
         #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct Phone {
-            #[prost(string, optional, tag="1")]
+            #[prost(string, optional, tag = "1")]
             pub value: ::core::option::Option<::prost::alloc::string::String>,
-            #[prost(enumeration="phone::Type", optional, tag="2")]
+            #[prost(enumeration = "phone::Type", optional, tag = "2")]
             pub r#type: ::core::option::Option<i32>,
-            #[prost(string, optional, tag="3")]
+            #[prost(string, optional, tag = "3")]
             pub label: ::core::option::Option<::prost::alloc::string::String>,
         }
         /// Nested message and enum types in `Phone`.
@@ -588,6 +595,7 @@ pub mod data_message {
                         Type::Custom => "CUSTOM",
                     }
                 }
+
                 /// Creates an enum from field names used in the ProtoBuf definition.
                 pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
                     match value {
@@ -601,13 +609,13 @@ pub mod data_message {
             }
         }
         #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct Email {
-            #[prost(string, optional, tag="1")]
+            #[prost(string, optional, tag = "1")]
             pub value: ::core::option::Option<::prost::alloc::string::String>,
-            #[prost(enumeration="email::Type", optional, tag="2")]
+            #[prost(enumeration = "email::Type", optional, tag = "2")]
             pub r#type: ::core::option::Option<i32>,
-            #[prost(string, optional, tag="3")]
+            #[prost(string, optional, tag = "3")]
             pub label: ::core::option::Option<::prost::alloc::string::String>,
         }
         /// Nested message and enum types in `Email`.
@@ -633,6 +641,7 @@ pub mod data_message {
                         Type::Custom => "CUSTOM",
                     }
                 }
+
                 /// Creates an enum from field names used in the ProtoBuf definition.
                 pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
                     match value {
@@ -646,25 +655,25 @@ pub mod data_message {
             }
         }
         #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct PostalAddress {
-            #[prost(enumeration="postal_address::Type", optional, tag="1")]
+            #[prost(enumeration = "postal_address::Type", optional, tag = "1")]
             pub r#type: ::core::option::Option<i32>,
-            #[prost(string, optional, tag="2")]
+            #[prost(string, optional, tag = "2")]
             pub label: ::core::option::Option<::prost::alloc::string::String>,
-            #[prost(string, optional, tag="3")]
+            #[prost(string, optional, tag = "3")]
             pub street: ::core::option::Option<::prost::alloc::string::String>,
-            #[prost(string, optional, tag="4")]
+            #[prost(string, optional, tag = "4")]
             pub pobox: ::core::option::Option<::prost::alloc::string::String>,
-            #[prost(string, optional, tag="5")]
+            #[prost(string, optional, tag = "5")]
             pub neighborhood: ::core::option::Option<::prost::alloc::string::String>,
-            #[prost(string, optional, tag="6")]
+            #[prost(string, optional, tag = "6")]
             pub city: ::core::option::Option<::prost::alloc::string::String>,
-            #[prost(string, optional, tag="7")]
+            #[prost(string, optional, tag = "7")]
             pub region: ::core::option::Option<::prost::alloc::string::String>,
-            #[prost(string, optional, tag="8")]
+            #[prost(string, optional, tag = "8")]
             pub postcode: ::core::option::Option<::prost::alloc::string::String>,
-            #[prost(string, optional, tag="9")]
+            #[prost(string, optional, tag = "9")]
             pub country: ::core::option::Option<::prost::alloc::string::String>,
         }
         /// Nested message and enum types in `PostalAddress`.
@@ -688,6 +697,7 @@ pub mod data_message {
                         Type::Custom => "CUSTOM",
                     }
                 }
+
                 /// Creates an enum from field names used in the ProtoBuf definition.
                 pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
                     match value {
@@ -700,116 +710,116 @@ pub mod data_message {
             }
         }
         #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct Avatar {
-            #[prost(message, optional, tag="1")]
+            #[prost(message, optional, tag = "1")]
             pub avatar: ::core::option::Option<super::super::AttachmentPointer>,
-            #[prost(bool, optional, tag="2")]
+            #[prost(bool, optional, tag = "2")]
             pub is_profile: ::core::option::Option<bool>,
         }
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Sticker {
-        #[prost(bytes="vec", optional, tag="1")]
+        #[prost(bytes = "vec", optional, tag = "1")]
         pub pack_id: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-        #[prost(bytes="vec", optional, tag="2")]
+        #[prost(bytes = "vec", optional, tag = "2")]
         pub pack_key: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-        #[prost(uint32, optional, tag="3")]
+        #[prost(uint32, optional, tag = "3")]
         pub sticker_id: ::core::option::Option<u32>,
-        #[prost(message, optional, tag="4")]
+        #[prost(message, optional, tag = "4")]
         pub data: ::core::option::Option<super::AttachmentPointer>,
-        #[prost(string, optional, tag="5")]
+        #[prost(string, optional, tag = "5")]
         pub emoji: ::core::option::Option<::prost::alloc::string::String>,
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Reaction {
-        #[prost(string, optional, tag="1")]
+        #[prost(string, optional, tag = "1")]
         pub emoji: ::core::option::Option<::prost::alloc::string::String>,
-        #[prost(bool, optional, tag="2")]
+        #[prost(bool, optional, tag = "2")]
         pub remove: ::core::option::Option<bool>,
-        #[prost(string, optional, tag="4")]
+        #[prost(string, optional, tag = "4")]
         pub target_author_aci: ::core::option::Option<::prost::alloc::string::String>,
-        #[prost(uint64, optional, tag="5")]
+        #[prost(uint64, optional, tag = "5")]
         pub target_sent_timestamp: ::core::option::Option<u64>,
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Delete {
-        #[prost(uint64, optional, tag="1")]
+        #[prost(uint64, optional, tag = "1")]
         pub target_sent_timestamp: ::core::option::Option<u64>,
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct GroupCallUpdate {
-        #[prost(string, optional, tag="1")]
+        #[prost(string, optional, tag = "1")]
         pub era_id: ::core::option::Option<::prost::alloc::string::String>,
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct StoryContext {
-        #[prost(string, optional, tag="1")]
+        #[prost(string, optional, tag = "1")]
         pub author_aci: ::core::option::Option<::prost::alloc::string::String>,
-        #[prost(uint64, optional, tag="2")]
+        #[prost(uint64, optional, tag = "2")]
         pub sent_timestamp: ::core::option::Option<u64>,
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Payment {
-        #[prost(oneof="payment::Item", tags="1, 2")]
+        #[prost(oneof = "payment::Item", tags = "1, 2")]
         pub item: ::core::option::Option<payment::Item>,
     }
     /// Nested message and enum types in `Payment`.
     pub mod payment {
         #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct Amount {
-            #[prost(oneof="amount::Amount", tags="1")]
+            #[prost(oneof = "amount::Amount", tags = "1")]
             pub amount: ::core::option::Option<amount::Amount>,
         }
         /// Nested message and enum types in `Amount`.
         pub mod amount {
             #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+            #[derive(Clone, PartialEq, ::prost::Message)]
             pub struct MobileCoin {
-                #[prost(uint64, optional, tag="1")]
+                #[prost(uint64, optional, tag = "1")]
                 pub pico_mob: ::core::option::Option<u64>,
             }
             #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Oneof)]
+            #[derive(Clone, PartialEq, ::prost::Oneof)]
             pub enum Amount {
-                #[prost(message, tag="1")]
+                #[prost(message, tag = "1")]
                 MobileCoin(MobileCoin),
             }
         }
         #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct Notification {
-            #[prost(string, optional, tag="2")]
+            #[prost(string, optional, tag = "2")]
             pub note: ::core::option::Option<::prost::alloc::string::String>,
-            #[prost(oneof="notification::Transaction", tags="1")]
+            #[prost(oneof = "notification::Transaction", tags = "1")]
             pub transaction: ::core::option::Option<notification::Transaction>,
         }
         /// Nested message and enum types in `Notification`.
         pub mod notification {
             #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+            #[derive(Clone, PartialEq, ::prost::Message)]
             pub struct MobileCoin {
-                #[prost(bytes="vec", optional, tag="1")]
+                #[prost(bytes = "vec", optional, tag = "1")]
                 pub receipt: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
             }
             #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Oneof)]
+            #[derive(Clone, PartialEq, ::prost::Oneof)]
             pub enum Transaction {
-                #[prost(message, tag="1")]
+                #[prost(message, tag = "1")]
                 MobileCoin(MobileCoin),
             }
         }
         #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct Activation {
-            #[prost(enumeration="activation::Type", optional, tag="1")]
+            #[prost(enumeration = "activation::Type", optional, tag = "1")]
             pub r#type: ::core::option::Option<i32>,
         }
         /// Nested message and enum types in `Activation`.
@@ -831,6 +841,7 @@ pub mod data_message {
                         Type::Activated => "ACTIVATED",
                     }
                 }
+
                 /// Creates an enum from field names used in the ProtoBuf definition.
                 pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
                     match value {
@@ -842,18 +853,18 @@ pub mod data_message {
             }
         }
         #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Oneof)]
+        #[derive(Clone, PartialEq, ::prost::Oneof)]
         pub enum Item {
-            #[prost(message, tag="1")]
+            #[prost(message, tag = "1")]
             Notification(Notification),
-            #[prost(message, tag="2")]
+            #[prost(message, tag = "2")]
             Activation(Activation),
         }
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct GiftBadge {
-        #[prost(bytes="vec", optional, tag="1")]
+        #[prost(bytes = "vec", optional, tag = "1")]
         pub receipt_credential_presentation: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
     }
     #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
@@ -875,6 +886,7 @@ pub mod data_message {
                 Flags::ProfileKeyUpdate => "PROFILE_KEY_UPDATE",
             }
         }
+
         /// Creates an enum from field names used in the ProtoBuf definition.
         pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
             match value {
@@ -914,6 +926,7 @@ pub mod data_message {
                 ProtocolVersion::Payments => "PAYMENTS",
             }
         }
+
         /// Creates an enum from field names used in the ProtoBuf definition.
         pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
             match value {
@@ -933,15 +946,15 @@ pub mod data_message {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct NullMessage {
-    #[prost(bytes="vec", optional, tag="1")]
+    #[prost(bytes = "vec", optional, tag = "1")]
     pub padding: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ReceiptMessage {
-    #[prost(enumeration="receipt_message::Type", optional, tag="1")]
+    #[prost(enumeration = "receipt_message::Type", optional, tag = "1")]
     pub r#type: ::core::option::Option<i32>,
-    #[prost(uint64, repeated, packed="false", tag="2")]
+    #[prost(uint64, repeated, packed = "false", tag = "2")]
     pub timestamp: ::prost::alloc::vec::Vec<u64>,
 }
 /// Nested message and enum types in `ReceiptMessage`.
@@ -965,6 +978,7 @@ pub mod receipt_message {
                 Type::Viewed => "VIEWED",
             }
         }
+
         /// Creates an enum from field names used in the ProtoBuf definition.
         pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
             match value {
@@ -979,11 +993,11 @@ pub mod receipt_message {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TypingMessage {
-    #[prost(uint64, optional, tag="1")]
+    #[prost(uint64, optional, tag = "1")]
     pub timestamp: ::core::option::Option<u64>,
-    #[prost(enumeration="typing_message::Action", optional, tag="2")]
+    #[prost(enumeration = "typing_message::Action", optional, tag = "2")]
     pub action: ::core::option::Option<i32>,
-    #[prost(bytes="vec", optional, tag="3")]
+    #[prost(bytes = "vec", optional, tag = "3")]
     pub group_id: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
 }
 /// Nested message and enum types in `TypingMessage`.
@@ -1005,6 +1019,7 @@ pub mod typing_message {
                 Action::Stopped => "STOPPED",
             }
         }
+
         /// Creates an enum from field names used in the ProtoBuf definition.
         pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
             match value {
@@ -1018,77 +1033,77 @@ pub mod typing_message {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StoryMessage {
-    #[prost(bytes="vec", optional, tag="1")]
+    #[prost(bytes = "vec", optional, tag = "1")]
     pub profile_key: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(message, optional, tag="2")]
+    #[prost(message, optional, tag = "2")]
     pub group: ::core::option::Option<GroupContextV2>,
-    #[prost(bool, optional, tag="5")]
+    #[prost(bool, optional, tag = "5")]
     pub allows_replies: ::core::option::Option<bool>,
-    #[prost(message, repeated, tag="6")]
+    #[prost(message, repeated, tag = "6")]
     pub body_ranges: ::prost::alloc::vec::Vec<BodyRange>,
-    #[prost(oneof="story_message::Attachment", tags="3, 4")]
+    #[prost(oneof = "story_message::Attachment", tags = "3, 4")]
     pub attachment: ::core::option::Option<story_message::Attachment>,
 }
 /// Nested message and enum types in `StoryMessage`.
 pub mod story_message {
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Attachment {
-        #[prost(message, tag="3")]
+        #[prost(message, tag = "3")]
         FileAttachment(super::AttachmentPointer),
-        #[prost(message, tag="4")]
+        #[prost(message, tag = "4")]
         TextAttachment(super::TextAttachment),
     }
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Preview {
-    #[prost(string, optional, tag="1")]
+    #[prost(string, optional, tag = "1")]
     pub url: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(string, optional, tag="2")]
+    #[prost(string, optional, tag = "2")]
     pub title: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(message, optional, tag="3")]
+    #[prost(message, optional, tag = "3")]
     pub image: ::core::option::Option<AttachmentPointer>,
-    #[prost(string, optional, tag="4")]
+    #[prost(string, optional, tag = "4")]
     pub description: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(uint64, optional, tag="5")]
+    #[prost(uint64, optional, tag = "5")]
     pub date: ::core::option::Option<u64>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TextAttachment {
-    #[prost(string, optional, tag="1")]
+    #[prost(string, optional, tag = "1")]
     pub text: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(enumeration="text_attachment::Style", optional, tag="2")]
+    #[prost(enumeration = "text_attachment::Style", optional, tag = "2")]
     pub text_style: ::core::option::Option<i32>,
     /// integer representation of hex color
-    #[prost(uint32, optional, tag="3")]
+    #[prost(uint32, optional, tag = "3")]
     pub text_foreground_color: ::core::option::Option<u32>,
-    #[prost(uint32, optional, tag="4")]
+    #[prost(uint32, optional, tag = "4")]
     pub text_background_color: ::core::option::Option<u32>,
-    #[prost(message, optional, tag="5")]
+    #[prost(message, optional, tag = "5")]
     pub preview: ::core::option::Option<Preview>,
-    #[prost(oneof="text_attachment::Background", tags="6, 7")]
+    #[prost(oneof = "text_attachment::Background", tags = "6, 7")]
     pub background: ::core::option::Option<text_attachment::Background>,
 }
 /// Nested message and enum types in `TextAttachment`.
 pub mod text_attachment {
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Gradient {
         /// deprecated: this field will be removed in a future release.
-        #[prost(uint32, optional, tag="1")]
+        #[prost(uint32, optional, tag = "1")]
         pub start_color: ::core::option::Option<u32>,
         /// deprecated: this field will be removed in a future release.
-        #[prost(uint32, optional, tag="2")]
+        #[prost(uint32, optional, tag = "2")]
         pub end_color: ::core::option::Option<u32>,
         /// degrees
-        #[prost(uint32, optional, tag="3")]
+        #[prost(uint32, optional, tag = "3")]
         pub angle: ::core::option::Option<u32>,
-        #[prost(uint32, repeated, packed="false", tag="4")]
+        #[prost(uint32, repeated, packed = "false", tag = "4")]
         pub colors: ::prost::alloc::vec::Vec<u32>,
         /// percent from 0 to 1
-        #[prost(float, repeated, packed="false", tag="5")]
+        #[prost(float, repeated, packed = "false", tag = "5")]
         pub positions: ::prost::alloc::vec::Vec<f32>,
     }
     #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
@@ -1116,6 +1131,7 @@ pub mod text_attachment {
                 Style::Condensed => "CONDENSED",
             }
         }
+
         /// Creates an enum from field names used in the ProtoBuf definition.
         pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
             match value {
@@ -1130,24 +1146,24 @@ pub mod text_attachment {
         }
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Background {
-        #[prost(message, tag="6")]
+        #[prost(message, tag = "6")]
         Gradient(Gradient),
-        #[prost(uint32, tag="7")]
+        #[prost(uint32, tag = "7")]
         Color(u32),
     }
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Verified {
-    #[prost(string, optional, tag="5")]
+    #[prost(string, optional, tag = "5")]
     pub destination_aci: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(bytes="vec", optional, tag="2")]
+    #[prost(bytes = "vec", optional, tag = "2")]
     pub identity_key: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(enumeration="verified::State", optional, tag="3")]
+    #[prost(enumeration = "verified::State", optional, tag = "3")]
     pub state: ::core::option::Option<i32>,
-    #[prost(bytes="vec", optional, tag="4")]
+    #[prost(bytes = "vec", optional, tag = "4")]
     pub null_message: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
 }
 /// Nested message and enum types in `Verified`.
@@ -1171,6 +1187,7 @@ pub mod verified {
                 State::Unverified => "UNVERIFIED",
             }
         }
+
         /// Creates an enum from field names used in the ProtoBuf definition.
         pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
             match value {
@@ -1185,114 +1202,114 @@ pub mod verified {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SyncMessage {
-    #[prost(message, optional, tag="1")]
+    #[prost(message, optional, tag = "1")]
     pub sent: ::core::option::Option<sync_message::Sent>,
-    #[prost(message, optional, tag="2")]
+    #[prost(message, optional, tag = "2")]
     pub contacts: ::core::option::Option<sync_message::Contacts>,
-    #[prost(message, optional, tag="4")]
+    #[prost(message, optional, tag = "4")]
     pub request: ::core::option::Option<sync_message::Request>,
-    #[prost(message, repeated, tag="5")]
+    #[prost(message, repeated, tag = "5")]
     pub read: ::prost::alloc::vec::Vec<sync_message::Read>,
-    #[prost(message, optional, tag="6")]
+    #[prost(message, optional, tag = "6")]
     pub blocked: ::core::option::Option<sync_message::Blocked>,
-    #[prost(message, optional, tag="7")]
+    #[prost(message, optional, tag = "7")]
     pub verified: ::core::option::Option<Verified>,
-    #[prost(message, optional, tag="9")]
+    #[prost(message, optional, tag = "9")]
     pub configuration: ::core::option::Option<sync_message::Configuration>,
-    #[prost(bytes="vec", optional, tag="8")]
+    #[prost(bytes = "vec", optional, tag = "8")]
     pub padding: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(message, repeated, tag="10")]
+    #[prost(message, repeated, tag = "10")]
     pub sticker_pack_operation: ::prost::alloc::vec::Vec<sync_message::StickerPackOperation>,
-    #[prost(message, optional, tag="11")]
+    #[prost(message, optional, tag = "11")]
     pub view_once_open: ::core::option::Option<sync_message::ViewOnceOpen>,
-    #[prost(message, optional, tag="12")]
+    #[prost(message, optional, tag = "12")]
     pub fetch_latest: ::core::option::Option<sync_message::FetchLatest>,
-    #[prost(message, optional, tag="13")]
+    #[prost(message, optional, tag = "13")]
     pub keys: ::core::option::Option<sync_message::Keys>,
-    #[prost(message, optional, tag="14")]
+    #[prost(message, optional, tag = "14")]
     pub message_request_response: ::core::option::Option<sync_message::MessageRequestResponse>,
-    #[prost(message, optional, tag="15")]
+    #[prost(message, optional, tag = "15")]
     pub outgoing_payment: ::core::option::Option<sync_message::OutgoingPayment>,
-    #[prost(message, repeated, tag="16")]
+    #[prost(message, repeated, tag = "16")]
     pub viewed: ::prost::alloc::vec::Vec<sync_message::Viewed>,
-    #[prost(message, optional, tag="18")]
+    #[prost(message, optional, tag = "18")]
     pub pni_change_number: ::core::option::Option<sync_message::PniChangeNumber>,
-    #[prost(message, optional, tag="19")]
+    #[prost(message, optional, tag = "19")]
     pub call_event: ::core::option::Option<sync_message::CallEvent>,
-    #[prost(message, optional, tag="20")]
+    #[prost(message, optional, tag = "20")]
     pub call_link_update: ::core::option::Option<sync_message::CallLinkUpdate>,
-    #[prost(message, optional, tag="21")]
+    #[prost(message, optional, tag = "21")]
     pub call_log_event: ::core::option::Option<sync_message::CallLogEvent>,
 }
 /// Nested message and enum types in `SyncMessage`.
 pub mod sync_message {
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Sent {
-        #[prost(string, optional, tag="1")]
+        #[prost(string, optional, tag = "1")]
         pub destination_e164: ::core::option::Option<::prost::alloc::string::String>,
-        #[prost(string, optional, tag="7")]
+        #[prost(string, optional, tag = "7")]
         pub destination_service_id: ::core::option::Option<::prost::alloc::string::String>,
-        #[prost(uint64, optional, tag="2")]
+        #[prost(uint64, optional, tag = "2")]
         pub timestamp: ::core::option::Option<u64>,
-        #[prost(message, optional, tag="3")]
+        #[prost(message, optional, tag = "3")]
         pub message: ::core::option::Option<super::DataMessage>,
-        #[prost(uint64, optional, tag="4")]
+        #[prost(uint64, optional, tag = "4")]
         pub expiration_start_timestamp: ::core::option::Option<u64>,
-        #[prost(message, repeated, tag="5")]
+        #[prost(message, repeated, tag = "5")]
         pub unidentified_status: ::prost::alloc::vec::Vec<sent::UnidentifiedDeliveryStatus>,
-        #[prost(bool, optional, tag="6", default="false")]
+        #[prost(bool, optional, tag = "6", default = "false")]
         pub is_recipient_update: ::core::option::Option<bool>,
-        #[prost(message, optional, tag="8")]
+        #[prost(message, optional, tag = "8")]
         pub story_message: ::core::option::Option<super::StoryMessage>,
-        #[prost(message, repeated, tag="9")]
+        #[prost(message, repeated, tag = "9")]
         pub story_message_recipients: ::prost::alloc::vec::Vec<sent::StoryMessageRecipient>,
-        #[prost(message, optional, tag="10")]
+        #[prost(message, optional, tag = "10")]
         pub edit_message: ::core::option::Option<super::EditMessage>,
     }
     /// Nested message and enum types in `Sent`.
     pub mod sent {
         #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct UnidentifiedDeliveryStatus {
-            #[prost(string, optional, tag="3")]
+            #[prost(string, optional, tag = "3")]
             pub destination_service_id: ::core::option::Option<::prost::alloc::string::String>,
-            #[prost(bool, optional, tag="2")]
+            #[prost(bool, optional, tag = "2")]
             pub unidentified: ::core::option::Option<bool>,
         }
         #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct StoryMessageRecipient {
-            #[prost(string, optional, tag="1")]
+            #[prost(string, optional, tag = "1")]
             pub destination_service_id: ::core::option::Option<::prost::alloc::string::String>,
-            #[prost(string, repeated, tag="2")]
+            #[prost(string, repeated, tag = "2")]
             pub distribution_list_ids: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
-            #[prost(bool, optional, tag="3")]
+            #[prost(bool, optional, tag = "3")]
             pub is_allowed_to_reply: ::core::option::Option<bool>,
         }
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Contacts {
-        #[prost(message, optional, tag="1")]
+        #[prost(message, optional, tag = "1")]
         pub blob: ::core::option::Option<super::AttachmentPointer>,
-        #[prost(bool, optional, tag="2", default="false")]
+        #[prost(bool, optional, tag = "2", default = "false")]
         pub complete: ::core::option::Option<bool>,
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Blocked {
-        #[prost(string, repeated, tag="1")]
+        #[prost(string, repeated, tag = "1")]
         pub numbers: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
-        #[prost(string, repeated, tag="3")]
+        #[prost(string, repeated, tag = "3")]
         pub acis: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
-        #[prost(bytes="vec", repeated, tag="2")]
+        #[prost(bytes = "vec", repeated, tag = "2")]
         pub group_ids: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Request {
-        #[prost(enumeration="request::Type", optional, tag="1")]
+        #[prost(enumeration = "request::Type", optional, tag = "1")]
         pub r#type: ::core::option::Option<i32>,
     }
     /// Nested message and enum types in `Request`.
@@ -1323,6 +1340,7 @@ pub mod sync_message {
                     Type::PniIdentity => "PNI_IDENTITY",
                 }
             }
+
             /// Creates an enum from field names used in the ProtoBuf definition.
             pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
                 match value {
@@ -1338,43 +1356,43 @@ pub mod sync_message {
         }
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Read {
-        #[prost(string, optional, tag="3")]
+        #[prost(string, optional, tag = "3")]
         pub sender_aci: ::core::option::Option<::prost::alloc::string::String>,
-        #[prost(uint64, optional, tag="2")]
+        #[prost(uint64, optional, tag = "2")]
         pub timestamp: ::core::option::Option<u64>,
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Viewed {
-        #[prost(string, optional, tag="3")]
+        #[prost(string, optional, tag = "3")]
         pub sender_aci: ::core::option::Option<::prost::alloc::string::String>,
-        #[prost(uint64, optional, tag="2")]
+        #[prost(uint64, optional, tag = "2")]
         pub timestamp: ::core::option::Option<u64>,
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Configuration {
-        #[prost(bool, optional, tag="1")]
+        #[prost(bool, optional, tag = "1")]
         pub read_receipts: ::core::option::Option<bool>,
-        #[prost(bool, optional, tag="2")]
+        #[prost(bool, optional, tag = "2")]
         pub unidentified_delivery_indicators: ::core::option::Option<bool>,
-        #[prost(bool, optional, tag="3")]
+        #[prost(bool, optional, tag = "3")]
         pub typing_indicators: ::core::option::Option<bool>,
-        #[prost(uint32, optional, tag="5")]
+        #[prost(uint32, optional, tag = "5")]
         pub provisioning_version: ::core::option::Option<u32>,
-        #[prost(bool, optional, tag="6")]
+        #[prost(bool, optional, tag = "6")]
         pub link_previews: ::core::option::Option<bool>,
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct StickerPackOperation {
-        #[prost(bytes="vec", optional, tag="1")]
+        #[prost(bytes = "vec", optional, tag = "1")]
         pub pack_id: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-        #[prost(bytes="vec", optional, tag="2")]
+        #[prost(bytes = "vec", optional, tag = "2")]
         pub pack_key: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-        #[prost(enumeration="sticker_pack_operation::Type", optional, tag="3")]
+        #[prost(enumeration = "sticker_pack_operation::Type", optional, tag = "3")]
         pub r#type: ::core::option::Option<i32>,
     }
     /// Nested message and enum types in `StickerPackOperation`.
@@ -1396,6 +1414,7 @@ pub mod sync_message {
                     Type::Remove => "REMOVE",
                 }
             }
+
             /// Creates an enum from field names used in the ProtoBuf definition.
             pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
                 match value {
@@ -1407,17 +1426,17 @@ pub mod sync_message {
         }
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct ViewOnceOpen {
-        #[prost(string, optional, tag="3")]
+        #[prost(string, optional, tag = "3")]
         pub sender_aci: ::core::option::Option<::prost::alloc::string::String>,
-        #[prost(uint64, optional, tag="2")]
+        #[prost(uint64, optional, tag = "2")]
         pub timestamp: ::core::option::Option<u64>,
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct FetchLatest {
-        #[prost(enumeration="fetch_latest::Type", optional, tag="1")]
+        #[prost(enumeration = "fetch_latest::Type", optional, tag = "1")]
         pub r#type: ::core::option::Option<i32>,
     }
     /// Nested message and enum types in `FetchLatest`.
@@ -1443,6 +1462,7 @@ pub mod sync_message {
                     Type::SubscriptionStatus => "SUBSCRIPTION_STATUS",
                 }
             }
+
             /// Creates an enum from field names used in the ProtoBuf definition.
             pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
                 match value {
@@ -1456,19 +1476,19 @@ pub mod sync_message {
         }
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Keys {
-        #[prost(bytes="vec", optional, tag="1")]
+        #[prost(bytes = "vec", optional, tag = "1")]
         pub storage_service: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct MessageRequestResponse {
-        #[prost(string, optional, tag="2")]
+        #[prost(string, optional, tag = "2")]
         pub thread_aci: ::core::option::Option<::prost::alloc::string::String>,
-        #[prost(bytes="vec", optional, tag="3")]
+        #[prost(bytes = "vec", optional, tag = "3")]
         pub group_id: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-        #[prost(enumeration="message_request_response::Type", optional, tag="4")]
+        #[prost(enumeration = "message_request_response::Type", optional, tag = "4")]
         pub r#type: ::core::option::Option<i32>,
     }
     /// Nested message and enum types in `MessageRequestResponse`.
@@ -1496,6 +1516,7 @@ pub mod sync_message {
                     Type::BlockAndDelete => "BLOCK_AND_DELETE",
                 }
             }
+
             /// Creates an enum from field names used in the ProtoBuf definition.
             pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
                 match value {
@@ -1510,79 +1531,79 @@ pub mod sync_message {
         }
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct OutgoingPayment {
-        #[prost(string, optional, tag="1")]
+        #[prost(string, optional, tag = "1")]
         pub recipient_service_id: ::core::option::Option<::prost::alloc::string::String>,
-        #[prost(string, optional, tag="2")]
+        #[prost(string, optional, tag = "2")]
         pub note: ::core::option::Option<::prost::alloc::string::String>,
-        #[prost(oneof="outgoing_payment::PaymentDetail", tags="3")]
+        #[prost(oneof = "outgoing_payment::PaymentDetail", tags = "3")]
         pub payment_detail: ::core::option::Option<outgoing_payment::PaymentDetail>,
     }
     /// Nested message and enum types in `OutgoingPayment`.
     pub mod outgoing_payment {
         #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+        #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct MobileCoin {
-            #[prost(bytes="vec", optional, tag="1")]
+            #[prost(bytes = "vec", optional, tag = "1")]
             pub recipient_address: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
             /// @required
-            #[prost(uint64, optional, tag="2")]
+            #[prost(uint64, optional, tag = "2")]
             pub amount_pico_mob: ::core::option::Option<u64>,
             /// @required
-            #[prost(uint64, optional, tag="3")]
+            #[prost(uint64, optional, tag = "3")]
             pub fee_pico_mob: ::core::option::Option<u64>,
-            #[prost(bytes="vec", optional, tag="4")]
+            #[prost(bytes = "vec", optional, tag = "4")]
             pub receipt: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-            #[prost(uint64, optional, tag="5")]
+            #[prost(uint64, optional, tag = "5")]
             pub ledger_block_timestamp: ::core::option::Option<u64>,
             /// @required
-            #[prost(uint64, optional, tag="6")]
+            #[prost(uint64, optional, tag = "6")]
             pub ledger_block_index: ::core::option::Option<u64>,
-            #[prost(bytes="vec", repeated, tag="7")]
+            #[prost(bytes = "vec", repeated, tag = "7")]
             pub spent_key_images: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
-            #[prost(bytes="vec", repeated, tag="8")]
+            #[prost(bytes = "vec", repeated, tag = "8")]
             pub output_public_keys: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
         }
         #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Oneof)]
+        #[derive(Clone, PartialEq, ::prost::Oneof)]
         pub enum PaymentDetail {
-            #[prost(message, tag="3")]
+            #[prost(message, tag = "3")]
             MobileCoin(MobileCoin),
         }
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct PniChangeNumber {
         /// Serialized libsignal-client IdentityKeyPair
-        #[prost(bytes="vec", optional, tag="1")]
+        #[prost(bytes = "vec", optional, tag = "1")]
         pub identity_key_pair: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
         /// Serialized libsignal-client SignedPreKeyRecord
-        #[prost(bytes="vec", optional, tag="2")]
+        #[prost(bytes = "vec", optional, tag = "2")]
         pub signed_pre_key: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
         /// Serialized libsignal-client KyberPreKeyRecord
-        #[prost(bytes="vec", optional, tag="5")]
+        #[prost(bytes = "vec", optional, tag = "5")]
         pub last_resort_kyber_pre_key: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-        #[prost(uint32, optional, tag="3")]
+        #[prost(uint32, optional, tag = "3")]
         pub registration_id: ::core::option::Option<u32>,
         /// The e164 we have changed our number to
-        #[prost(string, optional, tag="4")]
+        #[prost(string, optional, tag = "4")]
         pub new_e164: ::core::option::Option<::prost::alloc::string::String>,
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct CallEvent {
-        #[prost(bytes="vec", optional, tag="1")]
+        #[prost(bytes = "vec", optional, tag = "1")]
         pub conversation_id: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-        #[prost(uint64, optional, tag="2")]
+        #[prost(uint64, optional, tag = "2")]
         pub id: ::core::option::Option<u64>,
-        #[prost(uint64, optional, tag="3")]
+        #[prost(uint64, optional, tag = "3")]
         pub timestamp: ::core::option::Option<u64>,
-        #[prost(enumeration="call_event::Type", optional, tag="4")]
+        #[prost(enumeration = "call_event::Type", optional, tag = "4")]
         pub r#type: ::core::option::Option<i32>,
-        #[prost(enumeration="call_event::Direction", optional, tag="5")]
+        #[prost(enumeration = "call_event::Direction", optional, tag = "5")]
         pub direction: ::core::option::Option<i32>,
-        #[prost(enumeration="call_event::Event", optional, tag="6")]
+        #[prost(enumeration = "call_event::Event", optional, tag = "6")]
         pub event: ::core::option::Option<i32>,
     }
     /// Nested message and enum types in `CallEvent`.
@@ -1610,6 +1631,7 @@ pub mod sync_message {
                     Type::AdHocCall => "AD_HOC_CALL",
                 }
             }
+
             /// Creates an enum from field names used in the ProtoBuf definition.
             pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
                 match value {
@@ -1641,6 +1663,7 @@ pub mod sync_message {
                     Direction::Outgoing => "OUTGOING",
                 }
             }
+
             /// Creates an enum from field names used in the ProtoBuf definition.
             pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
                 match value {
@@ -1672,6 +1695,7 @@ pub mod sync_message {
                     Event::Delete => "DELETE",
                 }
             }
+
             /// Creates an enum from field names used in the ProtoBuf definition.
             pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
                 match value {
@@ -1685,19 +1709,19 @@ pub mod sync_message {
         }
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct CallLinkUpdate {
-        #[prost(bytes="vec", optional, tag="1")]
+        #[prost(bytes = "vec", optional, tag = "1")]
         pub root_key: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-        #[prost(bytes="vec", optional, tag="2")]
+        #[prost(bytes = "vec", optional, tag = "2")]
         pub admin_pass_key: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct CallLogEvent {
-        #[prost(enumeration="call_log_event::Type", optional, tag="1")]
+        #[prost(enumeration = "call_log_event::Type", optional, tag = "1")]
         pub r#type: ::core::option::Option<i32>,
-        #[prost(uint64, optional, tag="2")]
+        #[prost(uint64, optional, tag = "2")]
         pub timestamp: ::core::option::Option<u64>,
     }
     /// Nested message and enum types in `CallLogEvent`.
@@ -1717,6 +1741,7 @@ pub mod sync_message {
                     Type::Clear => "CLEAR",
                 }
             }
+
             /// Creates an enum from field names used in the ProtoBuf definition.
             pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
                 match value {
@@ -1730,38 +1755,38 @@ pub mod sync_message {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AttachmentPointer {
-    #[prost(string, optional, tag="2")]
+    #[prost(string, optional, tag = "2")]
     pub content_type: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(bytes="vec", optional, tag="3")]
+    #[prost(bytes = "vec", optional, tag = "3")]
     pub key: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(uint32, optional, tag="4")]
+    #[prost(uint32, optional, tag = "4")]
     pub size: ::core::option::Option<u32>,
-    #[prost(bytes="vec", optional, tag="5")]
+    #[prost(bytes = "vec", optional, tag = "5")]
     pub thumbnail: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(bytes="vec", optional, tag="6")]
+    #[prost(bytes = "vec", optional, tag = "6")]
     pub digest: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(bytes="vec", optional, tag="16")]
+    #[prost(bytes = "vec", optional, tag = "16")]
     pub incremental_digest: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(uint32, optional, tag="17")]
+    #[prost(uint32, optional, tag = "17")]
     pub incremental_mac_chunk_size: ::core::option::Option<u32>,
-    #[prost(string, optional, tag="7")]
+    #[prost(string, optional, tag = "7")]
     pub file_name: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(uint32, optional, tag="8")]
+    #[prost(uint32, optional, tag = "8")]
     pub flags: ::core::option::Option<u32>,
-    #[prost(uint32, optional, tag="9")]
+    #[prost(uint32, optional, tag = "9")]
     pub width: ::core::option::Option<u32>,
-    #[prost(uint32, optional, tag="10")]
+    #[prost(uint32, optional, tag = "10")]
     pub height: ::core::option::Option<u32>,
-    #[prost(string, optional, tag="11")]
+    #[prost(string, optional, tag = "11")]
     pub caption: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(string, optional, tag="12")]
+    #[prost(string, optional, tag = "12")]
     pub blur_hash: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(uint64, optional, tag="13")]
+    #[prost(uint64, optional, tag = "13")]
     pub upload_timestamp: ::core::option::Option<u64>,
     /// Next ID: 18
-    #[prost(uint32, optional, tag="14")]
+    #[prost(uint32, optional, tag = "14")]
     pub cdn_number: ::core::option::Option<u32>,
-    #[prost(oneof="attachment_pointer::AttachmentIdentifier", tags="1, 15")]
+    #[prost(oneof = "attachment_pointer::AttachmentIdentifier", tags = "1, 15")]
     pub attachment_identifier: ::core::option::Option<attachment_pointer::AttachmentIdentifier>,
 }
 /// Nested message and enum types in `AttachmentPointer`.
@@ -1785,6 +1810,7 @@ pub mod attachment_pointer {
                 Flags::Gif => "GIF",
             }
         }
+
         /// Creates an enum from field names used in the ProtoBuf definition.
         pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
             match value {
@@ -1796,36 +1822,36 @@ pub mod attachment_pointer {
         }
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum AttachmentIdentifier {
-        #[prost(fixed64, tag="1")]
+        #[prost(fixed64, tag = "1")]
         CdnId(u64),
-        #[prost(string, tag="15")]
+        #[prost(string, tag = "15")]
         CdnKey(::prost::alloc::string::String),
     }
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GroupContext {
-    #[prost(bytes="vec", optional, tag="1")]
+    #[prost(bytes = "vec", optional, tag = "1")]
     pub id: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(enumeration="group_context::Type", optional, tag="2")]
+    #[prost(enumeration = "group_context::Type", optional, tag = "2")]
     pub r#type: ::core::option::Option<i32>,
-    #[prost(string, optional, tag="3")]
+    #[prost(string, optional, tag = "3")]
     pub name: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(string, repeated, tag="4")]
+    #[prost(string, repeated, tag = "4")]
     pub members_e164: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
-    #[prost(message, repeated, tag="6")]
+    #[prost(message, repeated, tag = "6")]
     pub members: ::prost::alloc::vec::Vec<group_context::Member>,
-    #[prost(message, optional, tag="5")]
+    #[prost(message, optional, tag = "5")]
     pub avatar: ::core::option::Option<AttachmentPointer>,
 }
 /// Nested message and enum types in `GroupContext`.
 pub mod group_context {
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Member {
-        #[prost(string, optional, tag="2")]
+        #[prost(string, optional, tag = "2")]
         pub e164: ::core::option::Option<::prost::alloc::string::String>,
     }
     #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
@@ -1851,6 +1877,7 @@ pub mod group_context {
                 Type::RequestInfo => "REQUEST_INFO",
             }
         }
+
         /// Creates an enum from field names used in the ProtoBuf definition.
         pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
             match value {
@@ -1867,237 +1894,237 @@ pub mod group_context {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GroupContextV2 {
-    #[prost(bytes="vec", optional, tag="1")]
+    #[prost(bytes = "vec", optional, tag = "1")]
     pub master_key: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(uint32, optional, tag="2")]
+    #[prost(uint32, optional, tag = "2")]
     pub revision: ::core::option::Option<u32>,
-    #[prost(bytes="vec", optional, tag="3")]
+    #[prost(bytes = "vec", optional, tag = "3")]
     pub group_change: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ContactDetails {
-    #[prost(string, optional, tag="1")]
+    #[prost(string, optional, tag = "1")]
     pub number: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(string, optional, tag="9")]
+    #[prost(string, optional, tag = "9")]
     pub aci: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(string, optional, tag="2")]
+    #[prost(string, optional, tag = "2")]
     pub name: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(message, optional, tag="3")]
+    #[prost(message, optional, tag = "3")]
     pub avatar: ::core::option::Option<contact_details::Avatar>,
-    #[prost(string, optional, tag="4")]
+    #[prost(string, optional, tag = "4")]
     pub color: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(message, optional, tag="5")]
+    #[prost(message, optional, tag = "5")]
     pub verified: ::core::option::Option<Verified>,
-    #[prost(bytes="vec", optional, tag="6")]
+    #[prost(bytes = "vec", optional, tag = "6")]
     pub profile_key: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(bool, optional, tag="7")]
+    #[prost(bool, optional, tag = "7")]
     pub blocked: ::core::option::Option<bool>,
-    #[prost(uint32, optional, tag="8")]
+    #[prost(uint32, optional, tag = "8")]
     pub expire_timer: ::core::option::Option<u32>,
-    #[prost(uint32, optional, tag="10")]
+    #[prost(uint32, optional, tag = "10")]
     pub inbox_position: ::core::option::Option<u32>,
-    #[prost(bool, optional, tag="11")]
+    #[prost(bool, optional, tag = "11")]
     pub archived: ::core::option::Option<bool>,
 }
 /// Nested message and enum types in `ContactDetails`.
 pub mod contact_details {
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Avatar {
-        #[prost(string, optional, tag="1")]
+        #[prost(string, optional, tag = "1")]
         pub content_type: ::core::option::Option<::prost::alloc::string::String>,
-        #[prost(uint32, optional, tag="2")]
+        #[prost(uint32, optional, tag = "2")]
         pub length: ::core::option::Option<u32>,
     }
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GroupDetails {
-    #[prost(bytes="vec", optional, tag="1")]
+    #[prost(bytes = "vec", optional, tag = "1")]
     pub id: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(string, optional, tag="2")]
+    #[prost(string, optional, tag = "2")]
     pub name: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(string, repeated, tag="3")]
+    #[prost(string, repeated, tag = "3")]
     pub members_e164: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
-    #[prost(message, repeated, tag="9")]
+    #[prost(message, repeated, tag = "9")]
     pub members: ::prost::alloc::vec::Vec<group_details::Member>,
-    #[prost(message, optional, tag="4")]
+    #[prost(message, optional, tag = "4")]
     pub avatar: ::core::option::Option<group_details::Avatar>,
-    #[prost(bool, optional, tag="5", default="true")]
+    #[prost(bool, optional, tag = "5", default = "true")]
     pub active: ::core::option::Option<bool>,
-    #[prost(uint32, optional, tag="6")]
+    #[prost(uint32, optional, tag = "6")]
     pub expire_timer: ::core::option::Option<u32>,
-    #[prost(string, optional, tag="7")]
+    #[prost(string, optional, tag = "7")]
     pub color: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(bool, optional, tag="8")]
+    #[prost(bool, optional, tag = "8")]
     pub blocked: ::core::option::Option<bool>,
-    #[prost(uint32, optional, tag="10")]
+    #[prost(uint32, optional, tag = "10")]
     pub inbox_position: ::core::option::Option<u32>,
-    #[prost(bool, optional, tag="11")]
+    #[prost(bool, optional, tag = "11")]
     pub archived: ::core::option::Option<bool>,
 }
 /// Nested message and enum types in `GroupDetails`.
 pub mod group_details {
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Avatar {
-        #[prost(string, optional, tag="1")]
+        #[prost(string, optional, tag = "1")]
         pub content_type: ::core::option::Option<::prost::alloc::string::String>,
-        #[prost(uint32, optional, tag="2")]
+        #[prost(uint32, optional, tag = "2")]
         pub length: ::core::option::Option<u32>,
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Member {
-        #[prost(string, optional, tag="2")]
+        #[prost(string, optional, tag = "2")]
         pub e164: ::core::option::Option<::prost::alloc::string::String>,
     }
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PaymentAddress {
-    #[prost(oneof="payment_address::Address", tags="1")]
+    #[prost(oneof = "payment_address::Address", tags = "1")]
     pub address: ::core::option::Option<payment_address::Address>,
 }
 /// Nested message and enum types in `PaymentAddress`.
 pub mod payment_address {
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct MobileCoinAddress {
-        #[prost(bytes="vec", optional, tag="1")]
+        #[prost(bytes = "vec", optional, tag = "1")]
         pub address: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-        #[prost(bytes="vec", optional, tag="2")]
+        #[prost(bytes = "vec", optional, tag = "2")]
         pub signature: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Address {
-        #[prost(message, tag="1")]
+        #[prost(message, tag = "1")]
         MobileCoinAddress(MobileCoinAddress),
     }
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DecryptionErrorMessage {
-    #[prost(bytes="vec", optional, tag="1")]
+    #[prost(bytes = "vec", optional, tag = "1")]
     pub ratchet_key: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(uint64, optional, tag="2")]
+    #[prost(uint64, optional, tag = "2")]
     pub timestamp: ::core::option::Option<u64>,
-    #[prost(uint32, optional, tag="3")]
+    #[prost(uint32, optional, tag = "3")]
     pub device_id: ::core::option::Option<u32>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PniSignatureMessage {
-    #[prost(bytes="vec", optional, tag="1")]
+    #[prost(bytes = "vec", optional, tag = "1")]
     pub pni: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(bytes="vec", optional, tag="2")]
+    #[prost(bytes = "vec", optional, tag = "2")]
     pub signature: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EditMessage {
-    #[prost(uint64, optional, tag="1")]
+    #[prost(uint64, optional, tag = "1")]
     pub target_sent_timestamp: ::core::option::Option<u64>,
-    #[prost(message, optional, tag="2")]
+    #[prost(message, optional, tag = "2")]
     pub data_message: ::core::option::Option<DataMessage>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Pack {
-    #[prost(string, optional, tag="1")]
+    #[prost(string, optional, tag = "1")]
     pub title: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(string, optional, tag="2")]
+    #[prost(string, optional, tag = "2")]
     pub author: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(message, optional, tag="3")]
+    #[prost(message, optional, tag = "3")]
     pub cover: ::core::option::Option<pack::Sticker>,
-    #[prost(message, repeated, tag="4")]
+    #[prost(message, repeated, tag = "4")]
     pub stickers: ::prost::alloc::vec::Vec<pack::Sticker>,
 }
 /// Nested message and enum types in `Pack`.
 pub mod pack {
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Sticker {
-        #[prost(uint32, optional, tag="1")]
+        #[prost(uint32, optional, tag = "1")]
         pub id: ::core::option::Option<u32>,
-        #[prost(string, optional, tag="2")]
+        #[prost(string, optional, tag = "2")]
         pub emoji: ::core::option::Option<::prost::alloc::string::String>,
-        #[prost(string, optional, tag="3")]
+        #[prost(string, optional, tag = "3")]
         pub content_type: ::core::option::Option<::prost::alloc::string::String>,
     }
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ServerCertificate {
-    #[prost(bytes="vec", optional, tag="1")]
+    #[prost(bytes = "vec", optional, tag = "1")]
     pub certificate: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(bytes="vec", optional, tag="2")]
+    #[prost(bytes = "vec", optional, tag = "2")]
     pub signature: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
 }
 /// Nested message and enum types in `ServerCertificate`.
 pub mod server_certificate {
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Certificate {
-        #[prost(uint32, optional, tag="1")]
+        #[prost(uint32, optional, tag = "1")]
         pub id: ::core::option::Option<u32>,
-        #[prost(bytes="vec", optional, tag="2")]
+        #[prost(bytes = "vec", optional, tag = "2")]
         pub key: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
     }
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SenderCertificate {
-    #[prost(bytes="vec", optional, tag="1")]
+    #[prost(bytes = "vec", optional, tag = "1")]
     pub certificate: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(bytes="vec", optional, tag="2")]
+    #[prost(bytes = "vec", optional, tag = "2")]
     pub signature: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
 }
 /// Nested message and enum types in `SenderCertificate`.
 pub mod sender_certificate {
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Certificate {
-        #[prost(string, optional, tag="1")]
+        #[prost(string, optional, tag = "1")]
         pub sender_e164: ::core::option::Option<::prost::alloc::string::String>,
-        #[prost(string, optional, tag="6")]
+        #[prost(string, optional, tag = "6")]
         pub sender_uuid: ::core::option::Option<::prost::alloc::string::String>,
-        #[prost(uint32, optional, tag="2")]
+        #[prost(uint32, optional, tag = "2")]
         pub sender_device: ::core::option::Option<u32>,
-        #[prost(fixed64, optional, tag="3")]
+        #[prost(fixed64, optional, tag = "3")]
         pub expires: ::core::option::Option<u64>,
-        #[prost(bytes="vec", optional, tag="4")]
+        #[prost(bytes = "vec", optional, tag = "4")]
         pub identity_key: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-        #[prost(message, optional, tag="5")]
+        #[prost(message, optional, tag = "5")]
         pub signer: ::core::option::Option<super::ServerCertificate>,
     }
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UnidentifiedSenderMessage {
-    #[prost(bytes="vec", optional, tag="1")]
+    #[prost(bytes = "vec", optional, tag = "1")]
     pub ephemeral_public: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(bytes="vec", optional, tag="2")]
+    #[prost(bytes = "vec", optional, tag = "2")]
     pub encrypted_static: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(bytes="vec", optional, tag="3")]
+    #[prost(bytes = "vec", optional, tag = "3")]
     pub encrypted_message: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
 }
 /// Nested message and enum types in `UnidentifiedSenderMessage`.
 pub mod unidentified_sender_message {
     #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
+    #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Message {
-        #[prost(enumeration="message::Type", optional, tag="1")]
+        #[prost(enumeration = "message::Type", optional, tag = "1")]
         pub r#type: ::core::option::Option<i32>,
-        #[prost(message, optional, tag="2")]
+        #[prost(message, optional, tag = "2")]
         pub sender_certificate: ::core::option::Option<super::SenderCertificate>,
-        #[prost(bytes="vec", optional, tag="3")]
+        #[prost(bytes = "vec", optional, tag = "3")]
         pub content: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-        #[prost(enumeration="message::ContentHint", optional, tag="4")]
+        #[prost(enumeration = "message::ContentHint", optional, tag = "4")]
         pub content_hint: ::core::option::Option<i32>,
-        #[prost(bytes="vec", optional, tag="5")]
+        #[prost(bytes = "vec", optional, tag = "5")]
         pub group_id: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
     }
     /// Nested message and enum types in `Message`.
@@ -2110,7 +2137,6 @@ pub mod unidentified_sender_message {
             Message = 2,
             // Our parser does not handle reserved in enums: DESKTOP-1569
             // reserved 3 to 6;
-
             SenderkeyMessage = 7,
             PlaintextContent = 8,
         }
@@ -2127,6 +2153,7 @@ pub mod unidentified_sender_message {
                     Type::PlaintextContent => "PLAINTEXT_CONTENT",
                 }
             }
+
             /// Creates an enum from field names used in the ProtoBuf definition.
             pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
                 match value {
@@ -2145,7 +2172,8 @@ pub mod unidentified_sender_message {
             Default = 0,
             /// Sender will try to resend; delay any error UI if possible
             Resendable = 1,
-            /// Don't show any error UI at all; this is something sent implicitly like a typing message or a receipt
+            /// Don't show any error UI at all; this is something sent implicitly like a typing message or a
+            /// receipt
             Implicit = 2,
         }
         impl ContentHint {
@@ -2160,6 +2188,7 @@ pub mod unidentified_sender_message {
                     ContentHint::Implicit => "IMPLICIT",
                 }
             }
+
             /// Creates an enum from field names used in the ProtoBuf definition.
             pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
                 match value {
@@ -2175,39 +2204,39 @@ pub mod unidentified_sender_message {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct WebSocketRequestMessage {
-    #[prost(string, optional, tag="1")]
+    #[prost(string, optional, tag = "1")]
     pub verb: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(string, optional, tag="2")]
+    #[prost(string, optional, tag = "2")]
     pub path: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(bytes="vec", optional, tag="3")]
+    #[prost(bytes = "vec", optional, tag = "3")]
     pub body: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
-    #[prost(string, repeated, tag="5")]
+    #[prost(string, repeated, tag = "5")]
     pub headers: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
-    #[prost(uint64, optional, tag="4")]
+    #[prost(uint64, optional, tag = "4")]
     pub id: ::core::option::Option<u64>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct WebSocketResponseMessage {
-    #[prost(uint64, optional, tag="1")]
+    #[prost(uint64, optional, tag = "1")]
     pub id: ::core::option::Option<u64>,
-    #[prost(uint32, optional, tag="2")]
+    #[prost(uint32, optional, tag = "2")]
     pub status: ::core::option::Option<u32>,
-    #[prost(string, optional, tag="3")]
+    #[prost(string, optional, tag = "3")]
     pub message: ::core::option::Option<::prost::alloc::string::String>,
-    #[prost(string, repeated, tag="5")]
+    #[prost(string, repeated, tag = "5")]
     pub headers: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
-    #[prost(bytes="vec", optional, tag="4")]
+    #[prost(bytes = "vec", optional, tag = "4")]
     pub body: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct WebSocketMessage {
-    #[prost(enumeration="web_socket_message::Type", optional, tag="1")]
+    #[prost(enumeration = "web_socket_message::Type", optional, tag = "1")]
     pub r#type: ::core::option::Option<i32>,
-    #[prost(message, optional, tag="2")]
+    #[prost(message, optional, tag = "2")]
     pub request: ::core::option::Option<WebSocketRequestMessage>,
-    #[prost(message, optional, tag="3")]
+    #[prost(message, optional, tag = "3")]
     pub response: ::core::option::Option<WebSocketResponseMessage>,
 }
 /// Nested message and enum types in `WebSocketMessage`.
@@ -2231,6 +2260,7 @@ pub mod web_socket_message {
                 Type::Response => "RESPONSE",
             }
         }
+
         /// Creates an enum from field names used in the ProtoBuf definition.
         pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
             match value {

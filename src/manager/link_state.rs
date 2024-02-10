@@ -1,6 +1,7 @@
-use rkyv::{Archive, Deserialize, Serialize};
 use std::fmt;
 use std::str::FromStr;
+
+use rkyv::{Archive, Deserialize, Serialize};
 
 #[allow(dead_code)]
 #[derive(Archive, Serialize, Deserialize, Debug)]
@@ -11,9 +12,7 @@ pub enum LinkState {
 }
 
 impl fmt::Display for LinkState {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{:?}", self)
-    }
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result { write!(f, "{:?}", self) }
 }
 
 impl FromStr for LinkState {

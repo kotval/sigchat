@@ -1,17 +1,20 @@
 mod account;
 pub mod api;
+mod libsignal_service;
 mod manager;
 mod signalservice;
 
-use crate::account::{Account, ServiceEnvironment, DEFAULT_HOST};
-use crate::manager::{Config, Manager, TrustMode};
+use std::io::{Error, ErrorKind};
+
 pub use api::*;
 use chat::Chat;
 use locales::t;
 use modals::Modals;
-use std::io::{Error, ErrorKind};
 use tls::Tls;
 use url::{Host, Url};
+
+use crate::account::{Account, ServiceEnvironment, DEFAULT_HOST};
+use crate::manager::{Config, Manager, TrustMode};
 
 /// PDDB Dict for sigchat keys
 const SIGCHAT_ACCOUNT: &str = "sigchat.account";
@@ -38,13 +41,13 @@ impl<'a> SigChat<'a> {
         let pddb = pddb::Pddb::new();
         pddb.try_mount();
         SigChat {
-            chat: chat,
+            chat,
             manager: match Account::read(SIGCHAT_ACCOUNT) {
                 Ok(account) => Some(Manager::new(account, TrustMode::OnFirstUse)),
                 Err(_) => None,
             },
             netmgr: net::NetManager::new(),
-            modals: modals,
+            modals,
         }
     }
 
@@ -57,7 +60,6 @@ impl<'a> SigChat<'a> {
     ///
     /// # Returns
     /// true on a successful connection to a Signal Account/Server
-    ///
     pub fn connect(&mut self) -> Result<bool, Error> {
         log::info!("Attempting connect to Signal server");
         if self.wifi() {
@@ -67,21 +69,18 @@ impl<'a> SigChat<'a> {
                     Ok(account) => account,
                     Err(_) => self.account_setup()?,
                 };
-                self.chat
-                    .set_status_text(t!("sigchat.status.connecting", locales::LANG));
+                self.chat.set_status_text(t!("sigchat.status.connecting", locales::LANG));
                 self.chat.set_busy_state(true);
                 self.manager = Some(Manager::new(account, TrustMode::OnFirstUse));
                 self.chat.set_busy_state(false);
             }
             if self.manager.is_some() {
                 log::info!("Signal Account Manager OK");
-                self.chat
-                    .set_status_text(t!("sigchat.status.online", locales::LANG));
+                self.chat.set_status_text(t!("sigchat.status.online", locales::LANG));
                 Ok(true)
             } else {
                 log::info!("failed to setup Signal Account Manager");
-                self.chat
-                    .set_status_text(t!("sigchat.status.offline", locales::LANG));
+                self.chat.set_status_text(t!("sigchat.status.offline", locales::LANG));
                 Ok(false)
             }
         } else {
@@ -104,13 +103,10 @@ impl<'a> SigChat<'a> {
     ///
     /// # Returns
     /// Account struct stored in pddb
-    ///
     fn account_setup(&mut self) -> Result<Account, Error> {
         log::info!("Attempting to setup a Signal Account");
         let service_environment = ServiceEnvironment::Staging;
-        self.modals
-            .add_list_item(t!("sigchat.account.link", locales::LANG))
-            .expect("failed add list item");
+        self.modals.add_list_item(t!("sigchat.account.link", locales::LANG)).expect("failed add list item");
         self.modals
             .add_list_item(t!("sigchat.account.register", locales::LANG))
             .expect("failed add list item");
@@ -127,10 +123,7 @@ impl<'a> SigChat<'a> {
                     let config = Config::new(host, service_environment);
                     match self.probe_host(config.url()) {
                         true => Ok(self.account_link(&config)?),
-                        false => Err(Error::new(
-                            ErrorKind::Other,
-                            "failed to trust host certificate",
-                        )),
+                        false => Err(Error::new(ErrorKind::Other, "failed to trust host certificate")),
                     }
                 }
                 1 => {
@@ -138,10 +131,7 @@ impl<'a> SigChat<'a> {
                     let config = Config::new(host, service_environment);
                     match self.probe_host(config.url()) {
                         true => Ok(self.account_register(&config)?),
-                        false => Err(Error::new(
-                            ErrorKind::Other,
-                            "failed to trust host certificate",
-                        )),
+                        false => Err(Error::new(ErrorKind::Other, "failed to trust host certificate")),
                     }
                 }
                 2 => {
@@ -155,10 +145,7 @@ impl<'a> SigChat<'a> {
             },
             Err(e) => {
                 log::warn!("failed to present account setup radio buttons: {:?}", e);
-                Err(Error::new(
-                    ErrorKind::Other,
-                    "failed to present account setup radio buttons",
-                ))
+                Err(Error::new(ErrorKind::Other, "failed to present account setup radio buttons"))
             }
         }
     }
@@ -168,7 +155,6 @@ impl<'a> SigChat<'a> {
     /// # Returns
     ///
     /// the host provided by the user
-    ///
     fn host_modal(&self) -> Host {
         let mut host = None;
         while host.is_none() {
@@ -208,10 +194,8 @@ impl<'a> SigChat<'a> {
     ///
     /// # Returns
     /// true if at least 1 Certificate Authority is trusted
-    ///
     fn probe_host(&self, url: &Url) -> bool {
-        self.chat
-            .set_status_text(t!("sigchat.status.probing", locales::LANG));
+        self.chat.set_status_text(t!("sigchat.status.probing", locales::LANG));
         self.chat.set_busy_state(true);
         let tls = Tls::new();
         if tls.accessible(url.host_str().unwrap(), true) {
@@ -239,21 +223,16 @@ impl<'a> SigChat<'a> {
     ///
     /// # Returns
     /// Account struct stored in pddb
-    ///
     pub fn account_link(&mut self, config: &Config) -> Result<Account, Error> {
         log::info!("Attempting to Link to an existing Signal Account");
-        self.chat
-            .set_status_text(t!("sigchat.status.initializing", locales::LANG));
+        self.chat.set_status_text(t!("sigchat.status.initializing", locales::LANG));
         self.chat.set_busy_state(true);
         match Account::new(SIGCHAT_ACCOUNT, config.host(), config.service_environment()) {
             Ok(account) => {
                 let mut manager = Manager::new(account, TrustMode::OnFirstUse);
-                let name = self.name_modal(
-                    DEFAULT_DEVICE_NAME,
-                    t!("sigchat.account.link.name", locales::LANG),
-                );
-                self.chat
-                    .set_status_text(t!("sigchat.status.connecting", locales::LANG));
+                let name =
+                    self.name_modal(DEFAULT_DEVICE_NAME, t!("sigchat.account.link.name", locales::LANG));
+                self.chat.set_status_text(t!("sigchat.status.connecting", locales::LANG));
                 self.chat.set_busy_state(true);
                 match manager.link(&name) {
                     Ok(true) => {
@@ -264,10 +243,7 @@ impl<'a> SigChat<'a> {
                     Ok(false) => {
                         log::info!("failed to link Signal Account");
                         self.chat.set_busy_state(false);
-                        Err(Error::new(
-                            ErrorKind::Other,
-                            "failed to link Signal Account",
-                        ))
+                        Err(Error::new(ErrorKind::Other, "failed to link Signal Account"))
                     }
                     Err(e) => {
                         log::warn!("error while linking Signal Account: {e}");
@@ -275,28 +251,17 @@ impl<'a> SigChat<'a> {
                             log::warn!("failed to delete unregistered account from pddb: {e}")
                         });
                         self.chat.set_busy_state(false);
-                        self.modals
-                            .show_notification(&format!("{}", e), None)
-                            .expect("notification failed");
-                        Err(Error::new(
-                            ErrorKind::Other,
-                            "error while linking Signal Account",
-                        ))
+                        self.modals.show_notification(&format!("{}", e), None).expect("notification failed");
+                        Err(Error::new(ErrorKind::Other, "error while linking Signal Account"))
                     }
                 }
             }
             Err(e) => {
-                log::warn!(
-                    "failed to create new Account in pddb:{} : {e}",
-                    SIGCHAT_ACCOUNT
-                );
+                log::warn!("failed to create new Account in pddb:{} : {e}", SIGCHAT_ACCOUNT);
                 self.modals
                     .show_notification(t!("sigchat.account.failed", locales::LANG), None)
                     .expect("notification failed");
-                Err(Error::new(
-                    ErrorKind::Other,
-                    "failed to create new Account in pddb",
-                ))
+                Err(Error::new(ErrorKind::Other, "failed to create new Account in pddb"))
             }
         }
     }
@@ -309,14 +274,8 @@ impl<'a> SigChat<'a> {
     ///
     /// # Returns
     /// the name provided by the user
-    ///
     fn name_modal(&self, default_name: &str, prompt: &str) -> String {
-        match self
-            .modals
-            .alert_builder(prompt)
-            .field(Some(default_name.to_string()), None)
-            .build()
-        {
+        match self.modals.alert_builder(prompt).field(Some(default_name.to_string()), None).build() {
             Ok(text) => text.content()[0].content.to_string(),
             _ => default_name.to_string(),
         }
@@ -324,14 +283,13 @@ impl<'a> SigChat<'a> {
 
     /// Register a new Signal Account with this as the primary device.
     ///
-    /// A Signal Account requires a phone number to receive SMS or incoming calls for registration & validation.
-    /// The phone number must include the country calling code, i.e. the number must start with a "+" sign.
-    /// Warning: this will disable the authentication of your phone as a primary device.
+    /// A Signal Account requires a phone number to receive SMS or incoming calls for registration &
+    /// validation. The phone number must include the country calling code, i.e. the number must start
+    /// with a "+" sign. Warning: this will disable the authentication of your phone as a primary device.
     ///
     /// # Arguments
     ///
     /// * `config` - Signal configuration - host server and Live/Staging environment
-    ///
     pub fn account_register(&mut self, config: &Config) -> Result<Account, Error> {
         log::info!("Attempting to Register a new Signal Account");
         self.modals
@@ -357,14 +315,12 @@ impl<'a> SigChat<'a> {
 
     /// Attempts to obtain a phone number from the user.
     ///
-    /// A Signal Account requires a phone number to receive SMS or incoming calls for registration & validation.
-    /// The phone number must include the country calling code, i.e. the number must start with a "+" sign.
-    ///
+    /// A Signal Account requires a phone number to receive SMS or incoming calls for registration &
+    /// validation. The phone number must include the country calling code, i.e. the number must start
+    /// with a "+" sign.
     #[allow(dead_code)]
     fn number_modal(&mut self) -> Result<String, Error> {
-        let mut builder = self
-            .modals
-            .alert_builder(t!("sigchat.number.title", locales::LANG));
+        let mut builder = self.modals.alert_builder(t!("sigchat.number.title", locales::LANG));
         let builder = builder.field(Some(t!("sigchat.number", locales::LANG).to_string()), None);
         match builder.build() {
             Ok(payloads) => match payloads.content()[0].content.as_str() {
@@ -378,19 +334,13 @@ impl<'a> SigChat<'a> {
         }
     }
 
-    pub fn redraw(&self) {
-        self.chat.redraw();
-    }
+    pub fn redraw(&self) { self.chat.redraw(); }
 
     pub fn dialogue_set(&self, room_alias: Option<&str>) {
-        self.chat
-            .dialogue_set(SIGCHAT_DIALOGUE, room_alias)
-            .expect("failed to set dialogue");
+        self.chat.dialogue_set(SIGCHAT_DIALOGUE, room_alias).expect("failed to set dialogue");
     }
 
-    pub fn help(&self) {
-        self.chat.help();
-    }
+    pub fn help(&self) { self.chat.help(); }
 
     /// Returns true if wifi is connected
     ///
@@ -399,7 +349,6 @@ impl<'a> SigChat<'a> {
     ///
     /// # Returns
     /// true when wifi is connected
-    ///
     pub fn wifi(&self) -> bool {
         if HOSTED_MODE {
             return true;
@@ -413,20 +362,14 @@ impl<'a> SigChat<'a> {
 
         while self.wifi_try_modal() {
             self.netmgr.connection_manager_wifi_on_and_run().unwrap();
-            self.modals
-                .start_progress("Connecting ...", 0, 10, 0)
-                .expect("no progress bar");
+            self.modals.start_progress("Connecting ...", 0, 10, 0).expect("no progress bar");
             let tt = ticktimer_server::Ticktimer::new().unwrap();
             for wait in 0..WIFI_TIMEOUT {
                 tt.sleep_ms(1000).unwrap();
-                self.modals
-                    .update_progress(wait)
-                    .expect("no progress update");
+                self.modals.update_progress(wait).expect("no progress update");
                 if let Some(conf) = self.netmgr.get_ipv4_config() {
                     if conf.dhcp == com_rs::DhcpState::Bound {
-                        self.modals
-                            .finish_progress()
-                            .expect("failed progress finish");
+                        self.modals.finish_progress().expect("failed progress finish");
                         return true;
                     }
                 }
@@ -436,13 +379,10 @@ impl<'a> SigChat<'a> {
     }
 
     /// Returns true if "Connect to WiFi?" yes option is chosen
-    ///
     fn wifi_try_modal(&self) -> bool {
         self.modals.add_list_item("yes").expect("failed radio yes");
         self.modals.add_list_item("no").expect("failed radio no");
-        self.modals
-            .get_radiobutton("Connect to WiFi?")
-            .expect("failed radiobutton modal");
+        self.modals.get_radiobutton("Connect to WiFi?").expect("failed radiobutton modal");
         match self.modals.get_radio_index() {
             Ok(button) => button == 0,
             _ => false,
