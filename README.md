@@ -1,5 +1,7 @@
 # sigchat
 
+Note: This is a work in progress. Don't attempt to use this for any purpose until it has stablized. If you'd like to help develop it, contact us on [matrix](https://matrix.to/#/#xous-apps:matrix.org). 
+
 This is the skeleton of a Signal chat application.
 
 The UI and local storage are provided by the xous chat library.
@@ -94,4 +96,5 @@ You can choose between one of them if you use this work.
 We have a **desire** to license Sigchat under Apache-2.0 so that elements may be readily incorporated into other future [Xous](https://github.com/betrusted-io/xous-core) related projects.
 We are **required** to license any derivative works of [libsignal](https://github.com/signalapp/libsignal) under the AGPL-3.0 licence.
 
-
+## Credits
+In writing this we referenced [signal-cli](https://github.com/AsamK/signal-cli) and made liberal use of [libsignal-service-rs](https://github.com/whisperfish/libsignal-service-rs) which unfortunately had to be hacked apart due to our target's lack of tokio.

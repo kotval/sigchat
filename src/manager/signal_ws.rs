@@ -4,10 +4,14 @@ use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::Duration;
 
+use anyhow::anyhow;
+use bytes::Bytes;
 use rustls::{ClientConnection, StreamOwned};
 use tls::Tls;
-use tungstenite::{Message, WebSocket};
+use tungstenite::{Error as TunsteniteError, Message, WebSocket};
 use url::Url;
+
+use crate::signalservice::{WebSocketMessage, WebSocketRequestMessage, WebSocketResponseMessage};
 
 const PROVISIONING_PATH: [&str; 4] = ["v1", "websocket", "provisioning", ""];
 const REGISTRATION_PATH: [&str; 3] = ["v1", "registration", ""];
@@ -15,6 +19,18 @@ const REGISTRATION_PATH: [&str; 3] = ["v1", "registration", ""];
 #[allow(dead_code)]
 pub struct SignalWS {
     ws: Arc<Mutex<WebSocket<StreamOwned<ClientConnection, TcpStream>>>>,
+}
+
+fn ws_response(msg: tungstenite::Message) -> anyhow::Result<WebSocketResponseMessage> {
+    let frame = msg.into_data();
+    let ws_msg: WebSocketMessage = prost::Message::decode(Bytes::from(frame))?;
+    //TODO:: check that we actually got a response and make nice error
+    let response = match ws_msg.response {
+        Some(b) => b,
+        None => panic!("No Response in message"),
+    };
+    let response: WebSocketResponseMessage = prost::Message::decode(response.body())?;
+    Ok(response)
 }
 
 impl SignalWS {
@@ -78,7 +94,7 @@ impl SignalWS {
     ///
     /// # Returns
     /// a message read from the websocket or ErrorKind::TimedOut
-    pub fn read(&mut self, timeout: Option<Duration>) -> Result<Message, Error> {
+    pub fn read(&mut self, timeout: Option<Duration>) -> anyhow::Result<WebSocketResponseMessage> {
         match timeout {
             Some(duration) => {
                 let (tx, rx) = std::sync::mpsc::channel();
@@ -88,34 +104,20 @@ impl SignalWS {
                         tx.send(ws.read()).unwrap_or_else(|e| log::warn!("failed to forward ws msg: {e}"));
                     }
                 });
-                match rx.recv_timeout(duration) {
-                    Ok(rx_msg) => match rx_msg {
-                        Ok(msg) => Ok(msg),
-                        Err(e) => {
-                            log::warn!("{e}");
-                            Err(Error::new(ErrorKind::Other, "error on reading ws"))
-                        }
-                    },
-                    Err(e) => {
-                        log::warn!("{e}");
-                        Err(Error::new(ErrorKind::TimedOut, e))
-                    }
+                let msg = rx.recv_timeout(duration).unwrap().unwrap();
+                //let frame = msg.into_data();
+                //let ws_msg: WebSocketMessage = prost::Message::decode(frame.into())?;
+                //let response: WebSocketResponseMessage = prost::Message::decode(ws_msg.into())?;
+                //Ok(response)
+                ws_response(msg)
+            }
+            None => match self.ws.lock().and_then(|mut ws| Ok(ws.read())) {
+                Ok(msg) => ws_response(msg?),
+                Err(e) => {
+                    log::warn!("Read error: {}", e);
+                    Err(anyhow!("locked up oof"))
                 }
-            }
-            None => {
-                let msg = if let Ok(mut ws) = self.ws.lock() {
-                    match ws.read() {
-                        Ok(msg) => Ok(msg),
-                        Err(e) => {
-                            log::warn!("{e}");
-                            Err(Error::new(ErrorKind::Other, "error on reading ws"))
-                        }
-                    }
-                } else {
-                    Err(Error::new(ErrorKind::Other, "failed to get lock on websocket"))
-                };
-                msg
-            }
+            },
         }
     }
 

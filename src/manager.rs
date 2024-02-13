@@ -8,6 +8,7 @@ mod trust_mode;
 use std::io::{Error, ErrorKind};
 use std::time::Duration;
 
+use base64::prelude::*;
 use bytes::Bytes;
 pub use config::Config;
 use group_permission::GroupPermission;
@@ -20,9 +21,10 @@ use signal_ws::SignalWS;
 pub use trust_mode::TrustMode;
 use tungstenite::Message;
 
-use crate::libsignal_service::utils::BASE64_RELAXED;
 use crate::libsignal_service::ciphers::provisioning::ProvisioningCipher;
-use crate::signalservice::{ProvisionEnvelope, ProvisionMessage, ProvisioningUuid};
+use crate::libsignal_service::utils::BASE64_RELAXED;
+use crate::proto::{ProvisionEnvelope, ProvisionMessage, ProvisioningUuid, WebSocketMessage};
+use crate::signalservice::web_socket_message;
 use crate::Account;
 
 // Structure modeled on signal-cli by AsamK <asamk@gmx.de> and contributors - https://github.com/AsamK/signal-cli.
@@ -166,85 +168,33 @@ impl Manager {
     /// * `config` - Signal configuration - host server and Live/Staging environment
     /// * `service_environment` - service_environment to connect to on host
     #[allow(dead_code)]
-    pub fn link(&mut self, name: &str) -> Result<bool, Error> {
+    pub fn link(&mut self, name: &str) -> anyhow::Result<()> {
         let link_err = Error::new(ErrorKind::Other, "failed to link device");
         let mut host = self.config.url().clone();
-        let provisioning_cipher = ProvisioningCipher::generate(&mut rand::thread_rng())?;
-        match SignalWS::new_provision(&mut host) {
-            Ok(mut ws) => {
-                log::info!("provisioning websocket established to {host}");
-                let result = match ws.read(Some(Duration::from_millis(5000))) {
-                    Ok(Message::Binary(uuid)) => {
-                        log::info!("received Provisioning UUID message from host");
-                        let rng = rand::thread_rng();
-                        let key_pair = libsignal_protocol::KeyPair::generate(&mut rng);
-                        let uuid: ProvisioningUuid = prost::Message::decode(Bytes::from(uuid))?;
-                        let pub_key = &BASE64_RELAXED.encode(provisioning_cipher.public_key().serialize())?;
-                        match url::Url::parse_with_params(
-                            "sgnl://linkdevice",
-                            &[("uuid", &uuid.uuid.unwrap()), ("pub_key", &pub_key)],
-                        ) {
-                            Ok(device_link_uri) => {
-                                log::info!("device_link_uri: {device_link_uri}");
-                                let xns = xous_names::XousNames::new().unwrap();
-                                let modals = Modals::new(&xns).expect("can't connect to Modals server");
-                                modals
-                                    .show_notification(
-                                        t!("sigchat.account.link.scan", locales::LANG),
-                                        Some(device_link_uri.as_str()),
-                                    )
-                                    .expect("qrcode failed");
-                                match ws.read(Some(Duration::from_millis(5000))) {
-                                    Ok(Message::Binary(registration)) => {
-                                        log::info!("Registration message received from host");
-                                        let provision_envelope: ProvisionEnvelope =
-                                            prost::Message::decode(Bytes::from(registration))?;
-                                        let provision_message: ProvisionMessage =
-                                            provisioning_cipher.decrypt(provision_envelope)?;
-                                        match self.account.link(
-                                                "device_name",
-                                                provision_message
-                                            ) {
-                                            Ok(result) => Ok(result),
-                                            Err(e) => {
-                                                log::warn!("linking error: {e}");
-                                                Ok(false)
-                                            }
-                                        }
-                                    }
-                                    Ok(_) => {
-                                        log::warn!("unexpected Provisioning msg");
-                                        Err(link_err)
-                                    }
-                                    Err(e) => {
-                                        log::warn!("{e}");
-                                        Err(link_err)
-                                    }
-                                }
-                            }
-                            Err(e) => {
-                                log::info!("{}", format!("{e}"));
-                                Err(link_err)
-                            }
-                        }
-                    }
-                    Ok(_) => {
-                        log::warn!("unexpected Provisioning msg.");
-                        Err(link_err)
-                    }
-                    Err(e) => {
-                        log::warn!("{e}");
-                        Err(link_err)
-                    }
-                };
-                ws.close();
-                result
-            }
-            Err(e) => {
-                log::info!("failed to connect to server: {}", e);
-                Err(e)
-            }
-        }
+        let mut rng = rand::thread_rng();
+        let provisioning_cipher = ProvisioningCipher::generate(&mut rng)?;
+        let mut ws = SignalWS::new_provision(&mut host)?;
+        log::info!("provisioning websocket established to {host}");
+        let response = ws.read(Some(Duration::from_millis(5000)))?;
+        let uuid: ProvisioningUuid = prost::Message::decode(response.body())?;
+        log::info!("received Provisioning UUID message from host");
+        let pub_key = &BASE64_RELAXED.encode(provisioning_cipher.public_key().serialize());
+        let device_link_uri = url::Url::parse_with_params(
+            "sgnl://linkdevice",
+            &[("uuid", uuid.uuid()), ("pub_key", &pub_key)],
+        )?;
+        log::info!("device_link_uri: {device_link_uri}");
+        let xns = xous_names::XousNames::new().unwrap();
+        let modals = Modals::new(&xns).expect("can't connect to Modals server");
+        modals
+            .show_notification(t!("sigchat.account.link.scan", locales::LANG), Some(device_link_uri.as_str()))
+            .expect("qrcode failed");
+        let registration = ws.read(Some(Duration::from_millis(5000)))?;
+        log::info!("Registration message received from host");
+        let provision_envelope: ProvisionEnvelope = prost::Message::decode(registration.body())?;
+        let provision_msg = provisioning_cipher.decrypt(provision_envelope)?;
+        self.account.link("device_name", provision_msg);
+        Ok(())
     }
 
     /// Link another device to this device. Only works, if this is the primary device.
@@ -255,6 +205,8 @@ impl Manager {
     /// marks for shells.
     #[allow(dead_code)]
     pub fn add_device(_uri: &str) -> Result<(), Error> {
+        //Note: template can be found at
+        // /libsignal-service-rs/libsignal-service/src/account_manager.rs:320:link_device
         todo!();
     }
 

@@ -3,6 +3,7 @@ pub mod api;
 mod libsignal_service;
 mod manager;
 mod signalservice;
+mod proto;
 
 use std::io::{Error, ErrorKind};
 
@@ -235,16 +236,16 @@ impl<'a> SigChat<'a> {
                 self.chat.set_status_text(t!("sigchat.status.connecting", locales::LANG));
                 self.chat.set_busy_state(true);
                 match manager.link(&name) {
-                    Ok(true) => {
+                    Ok(_) => {
                         log::info!("Linked Signal Account");
                         self.chat.set_busy_state(false);
                         Ok(Account::read(SIGCHAT_ACCOUNT)?)
                     }
-                    Ok(false) => {
-                        log::info!("failed to link Signal Account");
-                        self.chat.set_busy_state(false);
-                        Err(Error::new(ErrorKind::Other, "failed to link Signal Account"))
-                    }
+                    //Ok(false) => {
+                    //    log::info!("failed to link Signal Account");
+                    //    self.chat.set_busy_state(false);
+                    //    Err(Error::new(ErrorKind::Other, "failed to link Signal Account"))
+                    //}
                     Err(e) => {
                         log::warn!("error while linking Signal Account: {e}");
                         Account::delete(SIGCHAT_ACCOUNT).unwrap_or_else(|e| {
@@ -299,7 +300,7 @@ impl<'a> SigChat<'a> {
             Ok(number) => {
                 log::info!("registration phone number = {:?}", number);
                 match Account::new(SIGCHAT_ACCOUNT, config.host(), config.service_environment()) {
-                    Ok(mut account) => match account.set_number(&number.to_string()) {
+                    Ok(mut account) => match account.set_number(number.to_string()) {
                         Ok(_number) => {
                             self.manager = Some(Manager::new(account, TrustMode::OnFirstUse));
                         }

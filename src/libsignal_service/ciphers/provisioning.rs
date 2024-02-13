@@ -1,6 +1,6 @@
+use std::array::TryFromSliceError;
 use std::borrow::Cow;
 use std::fmt::{self, Debug};
-use std::array::TryFromSliceError;
 
 use aes::cipher::block_padding::Pkcs7;
 use aes::cipher::{BlockDecryptMut, BlockEncryptMut, KeyIvInit};

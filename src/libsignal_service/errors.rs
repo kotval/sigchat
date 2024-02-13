@@ -1,7 +1,8 @@
-use prost::Message as ProtobufMessage;
-use libsignal_protocol::SignalProtocolError;
 use derivative::Derivative;
+use libsignal_protocol::SignalProtocolError;
+use prost::Message as ProtobufMessage;
 use serde::{Deserialize, Serialize};
+
 use crate::libsignal_service::service_address::ParseServiceAddressError;
 
 /// This type is used in registration lock handling.
@@ -42,7 +43,6 @@ pub struct MismatchedDevices {
 pub struct StaleDevices {
     pub stale_devices: Vec<u32>,
 }
-
 
 #[derive(thiserror::Error, Debug)]
 pub enum ServiceError {
@@ -102,13 +102,11 @@ pub enum ServiceError {
     // TODO: group support
     //#[error(transparent)]
     //CredentialsCacheError(#[from] crate::groups_v2::CredentialsCacheError),
-
     #[error("groups v2 (zero-knowledge) error")]
     GroupsV2Error,
 
     //#[error(transparent)]
     //GroupsV2DecryptionError(#[from] GroupDecodingError),
-
     #[error("unsupported content")]
     UnsupportedContent,
 
