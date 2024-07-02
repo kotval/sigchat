@@ -37,12 +37,12 @@ serde = { version = "1.0", features = [ "derive" ] }
 tls = { path = "../xous-core/libs/tls" }
 tungstenite = "0.21.0"
 url = "2.2.2"
-ring = {version = "=0.16.20"} #must be pinned since we patch in a version
+ring = {version = "=0.17.8"} #must be pinned since we patch in a version
 # must be manually specified as they have our pinned version of ring as a transitive dep.
-ureq = { version = "=2.7.1", features = ["json"] }
-rustls = { version = "=0.21.7", features = ["dangerous_configuration"] } 
-rustls-webpki = { version = "=0.101.4"}
-sct = { version = "=0.7.0" }
+ureq = { version = "=2.9.4", features = ["json"] }
+rustls = { version = "=0.22.2"} 
+rustls-webpki = { version = "=0.102.1"}
+sct = { version = "=0.7.1" }
 
 [features]
 default = []
@@ -61,8 +61,8 @@ branch="main"
 #path = "../curve25519-dalek"  # when doing local dev work
 # feature overrides are specified at the crate level
 
-[patch."https://github.com/betrusted-io/xous-engine-25519.git"]
-engine-25519 = {path = "../xous-core/services/engine-25519"}
+#[patch."https://github.com/betrusted-io/xous-engine-25519.git"]
+#engine-25519 = {path = "../xous-core/services/engine-25519"}
 
 [patch.crates-io.usb-device]
 git="https://github.com/betrusted-io/usb-device.git"
@@ -73,10 +73,10 @@ branch="main"
 [patch.crates-io.getrandom]
 path = "../xous-core/imports/getrandom"
 
-[patch.crates-io.ring]
+#[patch.crates-io.ring]
 # path = "../ring-xous"  # for local dev only
-git="https://github.com/betrusted-io/ring-xous"
-rev="4296c2e7904898766cf7d8d589759a129794783b" # use the commitref because we're still updating the branch
+#git="https://github.com/betrusted-io/ring-xous"
+#rev="4296c2e7904898766cf7d8d589759a129794783b" # use the commitref because we're still updating the branch
 
 #[patch.crates-io.utralib]
 #path = "../xous-core/utralib"
